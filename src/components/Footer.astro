@@ -1,0 +1,426 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+
+  <div class="container">
+
+    <div class="footer-shell glass">
+
+      <div class="footer-brand">
+
+        <span class="footer-kicker">
+          شاعر و داستان‌نویس
+        </span>
+
+        <h2>
+          مریم شیروانی‌راد
+        </h2>
+
+        <strong>
+          شویار
+        </strong>
+
+        <p>
+          شعر و داستان؛ دو زبان برای روایت آدم‌ها،
+          تجربه‌ها و زندگی.
+        </p>
+
+      </div>
+
+
+      <nav class="footer-nav" aria-label="منوی پایین سایت">
+
+        <a href="/">
+          خانه
+        </a>
+
+        <a href="/about">
+          درباره من
+        </a>
+
+        <a href="/works">
+          آثار
+        </a>
+
+        <a href="/gallery">
+          گالری
+        </a>
+
+        <a href="/achievements">
+          افتخارات
+        </a>
+
+        <a href="/contact">
+          ارتباط
+        </a>
+
+      </nav>
+
+
+      <div class="footer-socials">
+
+        <a
+          href="#"
+          aria-label="اینستاگرام"
+        >
+          IG
+        </a>
+
+        <a
+          href="#"
+          aria-label="تلگرام"
+        >
+          TG
+        </a>
+
+        <a
+          href="mailto:writer@example.com"
+          aria-label="ایمیل"
+        >
+          ✉
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+      <span>
+        © {currentYear} مریم شیروانی‌راد
+      </span>
+
+      <span class="footer-dot">
+        •
+      </span>
+
+      <span>
+        همه حقوق محفوظ است
+      </span>
+
+    </div>
+
+  </div>
+
+</footer>
+
+
+<style>
+
+  .site-footer {
+    padding:
+      0
+      0
+      28px;
+  }
+
+
+  .footer-shell {
+    position: relative;
+
+    display: grid;
+
+    grid-template-columns:
+      minmax(260px, 1.2fr)
+      minmax(220px, 0.8fr)
+      auto;
+
+    align-items: center;
+
+    gap:
+      clamp(30px, 5vw, 70px);
+
+    padding:
+      clamp(30px, 5vw, 52px);
+
+    border-radius: 30px;
+
+    overflow: hidden;
+  }
+
+
+  .footer-shell::before {
+    content: "";
+
+    position: absolute;
+
+    width: 300px;
+    height: 300px;
+
+    right: -150px;
+    bottom: -180px;
+
+    border-radius: 50%;
+
+    background:
+      rgba(144, 67, 213, 0.18);
+
+    filter:
+      blur(45px);
+
+    pointer-events: none;
+  }
+
+
+  /* BRAND */
+
+  .footer-brand {
+    position: relative;
+
+    z-index: 2;
+  }
+
+
+  .footer-kicker {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color:
+      var(--purple-light);
+
+    font-size: 11px;
+
+    font-weight: 700;
+  }
+
+
+  .footer-brand h2 {
+    margin:
+      0 0 2px;
+
+    font-size:
+      clamp(25px, 4vw, 38px);
+  }
+
+
+  .footer-brand strong {
+    display: block;
+
+    margin-bottom: 12px;
+
+    color:
+      var(--purple-light);
+
+    font-size: 20px;
+
+    font-weight: 800;
+  }
+
+
+  .footer-brand p {
+    max-width: 430px;
+
+    margin: 0;
+
+    font-size: 13px;
+
+    line-height: 2;
+  }
+
+
+  /* NAV */
+
+  .footer-nav {
+    position: relative;
+
+    z-index: 2;
+
+    display: grid;
+
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap:
+      6px 18px;
+  }
+
+
+  .footer-nav a {
+    display: inline-flex;
+
+    align-items: center;
+
+    min-height: 38px;
+
+    padding:
+      6px 10px;
+
+    border-radius: 11px;
+
+    color:
+      var(--text-soft);
+
+    font-size: 13px;
+
+    transition:
+      color 0.25s ease,
+      background 0.25s ease,
+      transform 0.25s ease;
+  }
+
+
+  .footer-nav a:hover {
+    color:
+      var(--purple-light);
+
+    background:
+      var(--surface);
+
+    transform:
+      translateX(-3px);
+  }
+
+
+  /* SOCIAL */
+
+  .footer-socials {
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+
+    gap: 9px;
+  }
+
+
+  .footer-socials a {
+    display: grid;
+
+    place-items: center;
+
+    width: 43px;
+    height: 43px;
+
+    border:
+      1px solid var(--border);
+
+    border-radius: 14px;
+
+    background:
+      var(--surface);
+
+    color:
+      var(--text-soft);
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    transition:
+      transform 0.25s ease,
+      color 0.25s ease,
+      border-color 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+
+
+  .footer-socials a:hover {
+    transform:
+      translateY(-3px);
+
+    color:
+      var(--purple-light);
+
+    border-color:
+      rgba(144, 67, 213, 0.26);
+
+    box-shadow:
+      0 10px 25px
+      rgba(104, 33, 121, 0.13);
+  }
+
+
+  /* BOTTOM */
+
+  .footer-bottom {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    padding:
+      18px 10px 0;
+
+    color:
+      var(--text-muted);
+
+    font-size: 11px;
+  }
+
+
+  .footer-dot {
+    color:
+      var(--purple-light);
+  }
+
+
+  /* TABLET */
+
+  @media (max-width: 900px) {
+
+    .footer-shell {
+      grid-template-columns:
+        1fr 1fr;
+    }
+
+
+    .footer-socials {
+      grid-column:
+        1 / -1;
+    }
+
+  }
+
+
+  /* MOBILE */
+
+  @media (max-width: 600px) {
+
+    .site-footer {
+      padding-bottom: 18px;
+    }
+
+
+    .footer-shell {
+      grid-template-columns:
+        1fr;
+
+      gap: 26px;
+
+      padding:
+        27px 20px;
+
+      border-radius: 24px;
+    }
+
+
+    .footer-nav {
+      grid-template-columns:
+        repeat(2, 1fr);
+    }
+
+
+    .footer-socials {
+      grid-column: auto;
+    }
+
+
+    .footer-bottom {
+      flex-wrap: wrap;
+
+      gap: 6px;
+
+      text-align: center;
+    }
+
+  }
+
+</style>

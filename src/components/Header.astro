@@ -1,0 +1,750 @@
+---
+import ThemeToggle from "./ThemeToggle.astro";
+
+const currentPath = Astro.url.pathname;
+
+const navItems = [
+  { label: "خانه", href: "/" },
+  { label: "درباره من", href: "/about" },
+  { label: "آثار", href: "/works" },
+  { label: "گالری", href: "/gallery" },
+  { label: "افتخارات", href: "/achievements" },
+  { label: "ارتباط", href: "/contact" },
+];
+
+const isActive = (href: string) => {
+  if (href === "/") {
+    return currentPath === "/";
+  }
+
+  return currentPath.startsWith(href);
+};
+---
+
+<header class="site-header">
+
+  <div class="container">
+
+    <div class="header-inner glass">
+
+      <!-- Spacer (منو را وسط نگه می‌دارد) -->
+      <div
+        class="header-spacer"
+        aria-hidden="true"
+      ></div>
+
+
+      <!-- Desktop Navigation -->
+      <nav
+        class="desktop-nav"
+        aria-label="منوی اصلی"
+      >
+
+        {
+          navItems.map((item) => (
+
+            <a
+              href={item.href}
+              class:list={[
+                "nav-link",
+                {
+                  "is-active":
+                    isActive(item.href),
+                },
+              ]}
+            >
+              {item.label}
+            </a>
+
+          ))
+        }
+
+      </nav>
+
+
+      <!-- Desktop Theme Toggle -->
+      <div class="header-actions">
+
+        <ThemeToggle />
+
+      </div>
+
+
+      <!-- Mobile Button -->
+      <button
+        class="mobile-menu-button"
+        type="button"
+        aria-label="باز کردن منو"
+        aria-expanded="false"
+        data-mobile-menu-button
+      >
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+      </button>
+
+    </div>
+
+
+    <!-- Mobile Menu -->
+    <div
+      class="mobile-menu glass"
+      data-mobile-menu
+    >
+
+      <nav
+        class="mobile-nav"
+        aria-label="منوی موبایل"
+      >
+
+        {
+          navItems.map((item) => (
+
+            <a
+              href={item.href}
+              class:list={[
+                "mobile-nav-link",
+                {
+                  "is-active":
+                    isActive(item.href),
+                },
+              ]}
+            >
+              <span>
+                {item.label}
+              </span>
+
+              <span
+                class="mobile-nav-arrow"
+                aria-hidden="true"
+              >
+                ←
+              </span>
+            </a>
+
+          ))
+        }
+
+      </nav>
+
+
+      <div class="mobile-theme">
+
+        <span class="mobile-theme-title">
+          ظاهر سایت
+        </span>
+
+        <ThemeToggle />
+
+      </div>
+
+    </div>
+
+  </div>
+
+</header>
+
+
+<script>
+
+  const initMobileMenu = () => {
+
+    const button =
+      document.querySelector(
+        "[data-mobile-menu-button]"
+      );
+
+    const menu =
+      document.querySelector(
+        "[data-mobile-menu]"
+      );
+
+    if (!button || !menu) return;
+
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        const isOpen =
+          menu.classList.toggle(
+            "is-open"
+          );
+
+        button.classList.toggle(
+          "is-open",
+          isOpen
+        );
+
+        button.setAttribute(
+          "aria-expanded",
+          isOpen
+            ? "true"
+            : "false"
+        );
+
+      }
+    );
+
+
+    document.addEventListener(
+      "click",
+      (event) => {
+
+        const target =
+          event.target as Node;
+
+        if (
+          !menu.contains(target) &&
+          !button.contains(target)
+        ) {
+
+          menu.classList.remove(
+            "is-open"
+          );
+
+          button.classList.remove(
+            "is-open"
+          );
+
+          button.setAttribute(
+            "aria-expanded",
+            "false"
+          );
+
+        }
+
+      }
+    );
+
+  };
+
+
+  initMobileMenu();
+
+
+  document.addEventListener(
+    "astro:page-load",
+    initMobileMenu
+  );
+
+</script>
+
+
+<style>
+
+  /* ========================================
+     HEADER
+  ======================================== */
+
+  .site-header {
+    position: sticky;
+
+    top: 0;
+
+    z-index: 100;
+
+    width: 100%;
+
+    padding-top: 18px;
+  }
+
+
+  .header-inner {
+
+    min-height: 76px;
+
+    display: grid;
+
+    grid-template-columns:
+      minmax(120px, 1fr)
+      auto
+      minmax(120px, 1fr);
+
+    align-items: center;
+
+    gap: 24px;
+
+    padding:
+      10px 16px 10px 12px;
+
+    border-radius: 24px;
+
+    background:
+      var(--header-bg);
+
+    transition:
+      background 0.35s ease,
+      border-color 0.35s ease;
+  }
+
+
+  /* ========================================
+     DESKTOP NAV
+  ======================================== */
+
+  .desktop-nav {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 4px;
+  }
+
+
+  .nav-link {
+
+    position: relative;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 44px;
+
+    padding:
+      8px 14px;
+
+    border-radius: 14px;
+
+    color: var(--text-soft);
+
+    font-size: 14px;
+
+    font-weight: 500;
+
+    white-space: nowrap;
+
+    transition:
+      color 0.25s ease,
+      background 0.25s ease,
+      transform 0.25s ease;
+  }
+
+
+  .nav-link:hover {
+
+    color: var(--text);
+
+    background:
+      var(--surface);
+  }
+
+
+  .nav-link::after {
+
+    content: "";
+
+    position: absolute;
+
+    right: 50%;
+    bottom: 3px;
+
+    width: 0;
+    height: 2px;
+
+    border-radius: 999px;
+
+    background:
+      var(--purple-gradient);
+
+    transform:
+      translateX(50%);
+
+    transition:
+      width 0.28s ease;
+  }
+
+
+  .nav-link:hover::after,
+  .nav-link.is-active::after {
+
+    width: 22px;
+  }
+
+
+  .nav-link.is-active {
+
+    color:
+      var(--purple-light);
+
+    background:
+      rgba(144, 67, 213, 0.08);
+  }
+
+
+  /* ========================================
+     ACTIONS
+  ======================================== */
+
+  .header-actions {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    align-items: center;
+  }
+
+
+  /* ========================================
+     MOBILE MENU BUTTON
+  ======================================== */
+
+  .mobile-menu-button {
+
+    display: none;
+
+    position: relative;
+
+    width: 46px;
+    height: 46px;
+
+    flex-shrink: 0;
+
+    border:
+      1px solid var(--glass-border);
+
+    border-radius: 15px;
+
+    background:
+      var(--surface);
+
+    backdrop-filter:
+      blur(18px);
+
+    -webkit-backdrop-filter:
+      blur(18px);
+
+    box-shadow:
+      var(--shadow);
+
+    transition:
+      background 0.25s ease,
+      border-color 0.25s ease;
+  }
+
+
+  .mobile-menu-button span {
+
+    position: absolute;
+
+    left: 50%;
+
+    width: 19px;
+
+    height: 2px;
+
+    border-radius: 999px;
+
+    background:
+      var(--text);
+
+    transform:
+      translateX(-50%);
+
+    transition:
+      top 0.3s ease,
+      transform 0.3s ease,
+      opacity 0.2s ease;
+  }
+
+
+  .mobile-menu-button span:nth-child(1) {
+    top: 15px;
+  }
+
+
+  .mobile-menu-button span:nth-child(2) {
+    top: 22px;
+  }
+
+
+  .mobile-menu-button span:nth-child(3) {
+    top: 29px;
+  }
+
+
+  .mobile-menu-button.is-open
+  span:nth-child(1) {
+
+    top: 22px;
+
+    transform:
+      translateX(-50%)
+      rotate(45deg);
+  }
+
+
+  .mobile-menu-button.is-open
+  span:nth-child(2) {
+
+    opacity: 0;
+  }
+
+
+  .mobile-menu-button.is-open
+  span:nth-child(3) {
+
+    top: 22px;
+
+    transform:
+      translateX(-50%)
+      rotate(-45deg);
+  }
+
+
+  /* ========================================
+     MOBILE MENU
+  ======================================== */
+
+  .mobile-menu {
+
+    display: none;
+
+    margin-top: 10px;
+
+    padding: 14px;
+
+    border-radius: 22px;
+
+    background:
+      var(--header-bg);
+
+    transform:
+      translateY(-8px);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition:
+      opacity 0.25s ease,
+      transform 0.25s ease,
+      visibility 0.25s ease;
+  }
+
+
+  .mobile-menu.is-open {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    pointer-events: auto;
+
+    transform:
+      translateY(0);
+  }
+
+
+  .mobile-nav {
+
+    display: grid;
+
+    gap: 6px;
+  }
+
+
+  .mobile-nav-link {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 16px;
+
+    min-height: 48px;
+
+    padding:
+      10px 14px;
+
+    border-radius: 14px;
+
+    color:
+      var(--text-soft);
+
+    border:
+      1px solid transparent;
+
+    transition:
+      background 0.25s ease,
+      border-color 0.25s ease,
+      color 0.25s ease;
+  }
+
+
+  .mobile-nav-link:hover {
+
+    background:
+      var(--surface);
+
+    color:
+      var(--text);
+  }
+
+
+  .mobile-nav-link.is-active {
+
+    color:
+      var(--purple-light);
+
+    background:
+      rgba(144, 67, 213, 0.10);
+
+    border-color:
+      rgba(144, 67, 213, 0.15);
+  }
+
+
+  .mobile-nav-arrow {
+
+    font-size: 18px;
+
+    opacity: 0.65;
+  }
+
+
+  .mobile-theme {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 18px;
+
+    margin-top: 12px;
+
+    padding:
+      14px 10px 4px;
+
+    border-top:
+      1px solid var(--border);
+  }
+
+
+  .mobile-theme-title {
+
+    color:
+      var(--text-muted);
+
+    font-size: 13px;
+  }
+
+
+  /* ========================================
+     TABLET
+  ======================================== */
+
+  @media (max-width: 1050px) {
+
+    .header-inner {
+
+      grid-template-columns:
+        1fr auto auto;
+    }
+
+
+    .desktop-nav {
+
+      display: none;
+    }
+
+
+    .header-actions {
+
+      display: flex;
+    }
+
+
+    .mobile-menu-button {
+
+      display: block;
+    }
+
+
+    .mobile-menu {
+
+      display: block;
+    }
+
+  }
+
+
+  /* ========================================
+     MOBILE
+  ======================================== */
+
+  @media (max-width: 600px) {
+
+    .site-header {
+
+      padding-top: 10px;
+    }
+
+
+    .header-inner {
+
+      min-height: 66px;
+
+      grid-template-columns:
+        minmax(0, 1fr)
+        auto
+        auto;
+
+      gap: 8px;
+
+      padding:
+        8px 9px 8px 12px;
+
+      border-radius: 20px;
+    }
+
+
+    .header-actions {
+
+      display: none;
+    }
+
+
+    .mobile-menu-button {
+
+      width: 44px;
+
+      height: 44px;
+    }
+
+
+    .mobile-menu {
+
+      border-radius: 20px;
+
+      padding: 11px;
+    }
+
+
+    .mobile-theme {
+
+      align-items: flex-start;
+
+      flex-direction: column;
+
+      gap: 10px;
+    }
+
+  }
+
+</style>

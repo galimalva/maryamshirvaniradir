@@ -1,0 +1,586 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const achievements = [
+  {
+    year: "۱۳۹۱",
+    type: "شعر",
+    title: "آغاز فعالیت حرفه‌ای در شعر",
+    description:
+      "شروع جدی مسیر شاعری مریم شیروانی‌راد با تخلّص «شویار» و تمرکز بر شعرهای انسانی و اجتماعی.",
+  },
+  {
+    year: "۱۳۹۳",
+    type: "داستان",
+    title: "ورود به داستان‌نویسی",
+    description:
+      "گسترش فعالیت ادبی از شعر به داستان و دنبال‌کردن روایت‌های اجتماعی و تجربه‌های انسانی.",
+  },
+  {
+    year: "افتخار",
+    type: "جشنواره",
+    title: "برگزیده جشنواره ایران جان",
+    description:
+      "انتخاب در بخش شعر جشنواره «ایران جان»؛ یکی از نقاط شاخص مسیر ادبی و حرفه‌ای شویار.",
+  },
+];
+---
+
+<Layout
+  title="افتخارات | مریم شیروانی‌راد"
+  description="افتخارات و سوابق ادبی مریم شیروانی‌راد با تخلص شویار"
+>
+
+  <main class="achievements-page">
+
+    <div class="container">
+
+      <!-- HERO -->
+      <section class="achievements-hero">
+
+        <h1>مسیر ادبی، <span>قدم‌به‌قدم</span></h1>
+
+      </section>
+
+
+      <!-- FEATURED AWARD -->
+      <section class="featured-award glass">
+
+        <div class="award-icon">
+          ✦
+        </div>
+
+        <div class="award-main">
+
+          <span class="award-kicker">
+            جشنواره ایران جان
+          </span>
+
+          <h2>
+            برگزیده در بخش شعر
+          </h2>
+
+          <p>
+            یکی از نقاط مهم مسیر ادبی مریم شیروانی‌راد،
+            انتخاب به‌عنوان برگزیده جشنواره «ایران جان»
+            در بخش شعر است.
+          </p>
+
+        </div>
+
+        <div class="award-signature">
+          شویار
+        </div>
+
+      </section>
+
+
+      <!-- JOURNEY -->
+      <section class="journey">
+
+        <h2 class="journey-heading">
+          سال‌ها و تجربه‌ها
+        </h2>
+
+
+        <div class="timeline">
+
+          {
+            achievements.map((item, index) => (
+
+              <article class="timeline-item">
+
+                <div class="timeline-meta">
+
+                  <span class="timeline-number">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+
+                  <span class="timeline-year">
+                    {item.year}
+                  </span>
+
+                </div>
+
+                <div class="timeline-marker">
+
+                  <span></span>
+
+                </div>
+
+                <div class="timeline-card glass">
+
+                  <span class="timeline-type">
+                    {item.type}
+                  </span>
+
+                  <h3>
+                    {item.title}
+                  </h3>
+
+                  <p>
+                    {item.description}
+                  </p>
+
+                </div>
+
+              </article>
+
+            ))
+          }
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+</Layout>
+
+
+<style>
+
+  .achievements-page {
+    padding:
+      clamp(55px, 8vw, 110px)
+      0
+      clamp(80px, 10vw, 140px);
+  }
+
+
+  /* HERO */
+
+  .achievements-hero {
+    margin-bottom:
+      clamp(50px, 8vw, 90px);
+  }
+
+
+  .achievements-hero h1 {
+    max-width: 800px;
+
+    margin: 0;
+
+    font-size:
+      clamp(42px, 7vw, 80px);
+
+    line-height: 1.35;
+
+    font-weight: 800;
+  }
+
+
+  .achievements-hero h1 span {
+    color:
+      var(--purple-light);
+  }
+
+
+  /* FEATURED AWARD */
+
+  .featured-award {
+    position: relative;
+
+    display: grid;
+
+    grid-template-columns:
+      auto minmax(0, 1fr) auto;
+
+    align-items: center;
+
+    gap:
+      clamp(22px, 4vw, 45px);
+
+    margin-bottom:
+      clamp(80px, 10vw, 130px);
+
+    padding:
+      clamp(30px, 5vw, 55px);
+
+    border-radius: 32px;
+
+    overflow: hidden;
+  }
+
+
+  .featured-award::before {
+    content: "";
+
+    position: absolute;
+
+    width: 320px;
+    height: 320px;
+
+    left: -160px;
+    top: -170px;
+
+    border-radius: 50%;
+
+    background:
+      rgba(144, 67, 213, 0.18);
+
+    filter:
+      blur(50px);
+  }
+
+
+  .award-icon {
+    position: relative;
+
+    z-index: 2;
+
+    display: grid;
+
+    place-items: center;
+
+    width: 85px;
+    height: 85px;
+
+    border-radius: 26px;
+
+    background:
+      var(--purple-gradient);
+
+    color: #fff;
+
+    font-size: 34px;
+
+    box-shadow:
+      var(--purple-glow);
+  }
+
+
+  .award-main {
+    position: relative;
+
+    z-index: 2;
+  }
+
+
+  .award-kicker {
+    color:
+      var(--purple-light);
+
+    font-size: 12px;
+
+    font-weight: 700;
+  }
+
+
+  .award-main h2 {
+    margin:
+      5px 0 10px;
+
+    font-size:
+      clamp(28px, 4vw, 44px);
+  }
+
+
+  .award-main p {
+    max-width: 680px;
+
+    margin: 0;
+
+    line-height: 2.1;
+  }
+
+
+  .award-signature {
+    position: relative;
+
+    z-index: 2;
+
+    color:
+      rgba(144, 67, 213, 0.38);
+
+    font-size:
+      clamp(32px, 5vw, 56px);
+
+    font-weight: 800;
+  }
+
+
+  /* JOURNEY */
+
+  .journey-heading {
+    max-width: 700px;
+
+    margin:
+      0
+      0
+      50px;
+
+    font-size:
+      clamp(34px, 5vw, 55px);
+  }
+
+
+  .timeline {
+    position: relative;
+
+    max-width: 950px;
+
+    margin-inline: auto;
+  }
+
+
+  .timeline::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+
+    right: 156px;
+
+    width: 1px;
+
+    background:
+      linear-gradient(
+        var(--purple-light),
+        rgba(144, 67, 213, 0.04)
+      );
+  }
+
+
+  .timeline-item {
+    position: relative;
+
+    display: grid;
+
+    grid-template-columns:
+      120px 72px minmax(0, 1fr);
+
+    align-items: start;
+
+    margin-bottom: 24px;
+  }
+
+
+  .timeline-item:last-child {
+    margin-bottom: 0;
+  }
+
+
+  .timeline-meta {
+    padding-top: 23px;
+  }
+
+
+  .timeline-number,
+  .timeline-year {
+    display: block;
+  }
+
+
+  .timeline-number {
+    color:
+      rgba(144, 67, 213, 0.35);
+
+    font-size: 11px;
+
+    font-weight: 800;
+  }
+
+
+  .timeline-year {
+    margin-top: 3px;
+
+    color:
+      var(--text);
+
+    font-size: 15px;
+
+    font-weight: 700;
+  }
+
+
+  .timeline-marker {
+    position: relative;
+
+    display: flex;
+
+    justify-content: center;
+  }
+
+
+  .timeline-marker span {
+    position: relative;
+
+    z-index: 2;
+
+    width: 14px;
+    height: 14px;
+
+    margin-top: 29px;
+
+    border-radius: 50%;
+
+    background:
+      var(--purple-light);
+
+    box-shadow:
+      0 0 0 8px
+      rgba(144, 67, 213, 0.10),
+      0 0 24px
+      rgba(144, 67, 213, 0.32);
+  }
+
+
+  .timeline-card {
+    padding:
+      25px 28px;
+
+    border-radius: 24px;
+
+    transition:
+      transform 0.28s ease,
+      border-color 0.28s ease,
+      box-shadow 0.28s ease;
+  }
+
+
+  .timeline-card:hover {
+    transform:
+      translateY(-4px);
+
+    border-color:
+      rgba(144, 67, 213, 0.25);
+
+    box-shadow:
+      var(--shadow-hover);
+  }
+
+
+  .timeline-type {
+    color:
+      var(--purple-light);
+
+    font-size: 11px;
+
+    font-weight: 700;
+  }
+
+
+  .timeline-card h3 {
+    margin:
+      5px 0 8px;
+
+    font-size:
+      clamp(19px, 2.4vw, 25px);
+  }
+
+
+  .timeline-card p {
+    margin: 0;
+
+    font-size: 14px;
+
+    line-height: 2.1;
+  }
+
+
+  /* TABLET */
+
+  @media (max-width: 900px) {
+
+    .featured-award {
+      grid-template-columns:
+        auto minmax(0, 1fr);
+    }
+
+
+    .award-signature {
+      grid-column:
+        1 / -1;
+    }
+
+  }
+
+
+  /* MOBILE */
+
+  @media (max-width: 600px) {
+
+    .achievements-page {
+      padding:
+        38px 0 80px;
+    }
+
+
+    .achievements-hero h1 {
+      font-size:
+        clamp(38px, 11vw, 52px);
+    }
+
+
+    .featured-award {
+      grid-template-columns:
+        1fr;
+
+      gap: 18px;
+    }
+
+
+    .award-icon {
+      width: 65px;
+      height: 65px;
+
+      border-radius: 20px;
+
+      font-size: 27px;
+    }
+
+
+    .award-signature {
+      grid-column: auto;
+    }
+
+
+    .timeline::before {
+      right: 17px;
+    }
+
+
+    .timeline-item {
+      grid-template-columns:
+        35px minmax(0, 1fr);
+
+      gap: 12px;
+    }
+
+
+    .timeline-meta {
+      grid-column: 2;
+
+      padding:
+        0 5px 6px;
+    }
+
+
+    .timeline-marker {
+      grid-column: 1;
+
+      grid-row:
+        1 / 3;
+    }
+
+
+    .timeline-marker span {
+      margin-top: 8px;
+    }
+
+
+    .timeline-card {
+      grid-column: 2;
+
+      padding:
+        20px;
+    }
+
+  }
+
+</style>
