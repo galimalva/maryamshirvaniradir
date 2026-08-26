@@ -1,0 +1,363 @@
+<!-- ==============================
+     INTRO / نوشته‌شدن با قلم
+================================ -->
+
+<div class="intro" id="intro-overlay" aria-hidden="true">
+
+  <div class="intro-glow"></div>
+
+  <div class="intro-content">
+
+    <div class="intro-name-wrap">
+
+      <p class="intro-name">
+        مریم شیروانی‌راد
+      </p>
+
+      <span class="intro-pen" aria-hidden="true">
+        <span class="pen-body">✒️</span>
+      </span>
+
+    </div>
+
+    <div class="intro-penname-wrap">
+
+      <span class="intro-penname">
+        «شویار»
+      </span>
+
+    </div>
+
+    <span class="intro-line"></span>
+
+  </div>
+
+</div>
+
+
+<script>
+
+  const intro =
+    document.getElementById(
+      "intro-overlay"
+    );
+
+
+  let alreadyShown = false;
+
+  try {
+    alreadyShown =
+      sessionStorage.getItem(
+        "intro-shown"
+      ) === "1";
+  } catch {}
+
+
+  const reducedMotion =
+    window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+
+  if (!intro || alreadyShown || reducedMotion) {
+
+    intro?.remove();
+
+  } else {
+
+    document.body.style.overflow =
+      "hidden";
+
+    try {
+      sessionStorage.setItem(
+        "intro-shown",
+        "1"
+      );
+    } catch {}
+
+
+    setTimeout(() => {
+
+      intro.remove();
+
+      document.body.style.overflow =
+        "";
+
+    }, 5000);
+
+  }
+
+</script>
+
+
+<style>
+
+  .intro {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    display: grid;
+
+    place-items: center;
+
+    background:
+      var(--background);
+
+    overflow: hidden;
+
+    animation:
+      introFadeOut
+      0.7s ease
+      4.2s
+      forwards;
+  }
+
+
+  .intro-glow {
+    position: absolute;
+
+    width: 420px;
+    height: 420px;
+
+    border-radius: 50%;
+
+    background:
+      radial-gradient(
+        circle,
+        rgba(144, 67, 213, 0.35),
+        rgba(104, 33, 121, 0.12) 50%,
+        transparent 72%
+      );
+
+    filter: blur(30px);
+
+    animation:
+      introFadeIn
+      1.4s ease
+      both;
+  }
+
+
+  .intro-content {
+    position: relative;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 20px;
+
+    text-align: center;
+  }
+
+
+  /* ==============================
+     نام — نوشته‌شدن با قلم
+  =============================== */
+
+  .intro-name-wrap {
+    position: relative;
+  }
+
+
+  .intro-name {
+    margin: 0;
+
+    color:
+      var(--text);
+
+    font-size:
+      clamp(34px, 8vw, 72px);
+
+    font-weight: 800;
+
+    line-height: 1.5;
+
+    /* شروع: همه‌چیز مخفی از سمت چپ */
+    clip-path:
+      inset(-20% -10% -20% 100%);
+
+    animation:
+      writeReveal
+      1.8s linear
+      0.4s
+      forwards;
+  }
+
+
+  /* قلمی که روی متن حرکت می‌کند */
+
+  .intro-pen {
+    position: absolute;
+
+    top: 42%;
+
+    right: -0.1em;
+
+    font-size:
+      clamp(22px, 4.5vw, 40px);
+
+    opacity: 0;
+
+    transform:
+      translateY(-55%)
+      rotate(-12deg);
+
+    animation:
+      penShow 0.2s ease 0.35s both,
+      penMove
+      1.8s linear
+      0.4s
+      forwards;
+  }
+
+
+  .pen-body {
+    display: inline-block;
+
+    animation:
+      penBob
+      0.28s ease-in-out
+      infinite
+      alternate;
+  }
+
+
+  /* ==============================
+     شویار
+  =============================== */
+
+  .intro-penname-wrap {
+    position: relative;
+  }
+
+
+  .intro-penname {
+    display: block;
+
+    color:
+      var(--purple-light);
+
+    font-size:
+      clamp(20px, 4vw, 34px);
+
+    font-weight: 700;
+
+    line-height: 1.6;
+
+    clip-path:
+      inset(-20% -10% -20% 100%);
+
+    animation:
+      writeReveal
+      0.9s linear
+      2.35s
+      forwards;
+  }
+
+
+  /* ==============================
+     خط زیر
+  =============================== */
+
+  .intro-line {
+    width: 0;
+    height: 3px;
+
+    margin-top: 18px;
+
+    border-radius: 999px;
+
+    background:
+      var(--purple-gradient);
+
+    animation:
+      introLine
+      0.55s ease
+      3.35s
+      forwards;
+  }
+
+
+  /* ==============================
+     KEYFRAMES
+  =============================== */
+
+  @keyframes writeReveal {
+    from {
+      clip-path:
+        inset(-20% -10% -20% 100%);
+    }
+    to {
+      clip-path:
+        inset(-20% -10% -20% 0%);
+    }
+  }
+
+
+  @keyframes penShow {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+
+  @keyframes penMove {
+    from {
+      right: -0.1em;
+    }
+    to {
+      right: 100%;
+    }
+  }
+
+
+  @keyframes penBob {
+    from {
+      transform:
+        translateY(-2px)
+        rotate(-3deg);
+    }
+    to {
+      transform:
+        translateY(2px)
+        rotate(2deg);
+    }
+  }
+
+
+  @keyframes introFadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+
+  @keyframes introLine {
+    to {
+      width: 90px;
+    }
+  }
+
+
+  @keyframes introFadeOut {
+    to {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+
+</style>

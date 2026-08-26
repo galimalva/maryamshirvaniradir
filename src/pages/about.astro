@@ -40,7 +40,7 @@ import Layout from "../layouts/Layout.astro";
 
           <p class="lead">
             شاعر و داستان‌نویس، متولد ۱۳۵۴؛
-            سال‌هاست کلمه برای من راهی برای دیدن آدم‌ها،
+            سال‌هاست کلمه برای من راهی برای دیدن آدم‌ها,
             احساسات و روایت‌های پنهان زندگی است.
           </p>
 
@@ -164,16 +164,18 @@ import Layout from "../layouts/Layout.astro";
   ======================================== */
 
   .about-content h1 {
-    max-width: 720px;
+    max-width: none;
 
     margin-bottom: 20px;
 
     font-size:
-      clamp(42px, 6vw, 78px);
+      clamp(24px, 3.8vw, 46px);
 
-    line-height: 1.35;
+    line-height: 1.5;
 
     font-weight: 800;
+
+    white-space: nowrap;
   }
 
 
@@ -276,7 +278,7 @@ import Layout from "../layouts/Layout.astro";
 
     .about-content h1 {
       font-size:
-        clamp(37px, 11vw, 50px);
+        clamp(20px, 6vw, 32px);
     }
 
   }
