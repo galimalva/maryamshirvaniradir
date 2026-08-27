@@ -1,32 +1,19 @@
 <!-- ==============================
-     INTRO / نوشته‌شدن با قلم
+     INTRO — نوشته‌شدن با قلم (v2)
 ================================ -->
 
-<div class="intro" id="intro-overlay" aria-hidden="true">
+<div class="intro" id="intro-overlay">
 
   <div class="intro-glow"></div>
 
   <div class="intro-content">
 
     <div class="intro-name-wrap">
-
-      <p class="intro-name">
-        مریم شیروانی‌راد
-      </p>
-
-      <span class="intro-pen" aria-hidden="true">
-        <span class="pen-body">✒️</span>
-      </span>
-
+      <p class="intro-name">مریم شیروانی‌راد</p>
+      <span class="intro-pen" aria-hidden="true">✒️</span>
     </div>
 
-    <div class="intro-penname-wrap">
-
-      <span class="intro-penname">
-        «شویار»
-      </span>
-
-    </div>
+    <span class="intro-penname">«شویار»</span>
 
     <span class="intro-line"></span>
 
@@ -35,93 +22,90 @@
 </div>
 
 
+<!-- تصمیم قبل از رندر: در همین سشن قبلاً نمایش داده شده؟ -->
+<script is:inline>
+  (() => {
+    let skip = false;
+
+    try {
+      skip =
+        sessionStorage.getItem("intro-shown") === "1" ||
+        matchMedia("(prefers-reduced-motion: reduce)").matches;
+    } catch {}
+
+    if (skip) {
+      document.documentElement.dataset.introSkip = "";
+    }
+  })();
+</script>
+
+
 <script>
+  const intro = document.getElementById("intro-overlay");
 
-  const intro =
-    document.getElementById(
-      "intro-overlay"
-    );
+  const skipAttr =
+    document.documentElement.hasAttribute("data-intro-skip");
 
-
-  let alreadyShown = false;
-
-  try {
-    alreadyShown =
-      sessionStorage.getItem(
-        "intro-shown"
-      ) === "1";
-  } catch {}
-
-
-  const reducedMotion =
-    window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-
-
-  if (!intro || alreadyShown || reducedMotion) {
+  if (!intro || skipAttr) {
 
     intro?.remove();
 
   } else {
 
-    document.body.style.overflow =
-      "hidden";
+    document.body.style.overflow = "hidden";
 
     try {
-      sessionStorage.setItem(
-        "intro-shown",
-        "1"
-      );
+      sessionStorage.setItem("intro-shown", "1");
     } catch {}
 
-
-    setTimeout(() => {
-
+    const finish = () => {
       intro.remove();
+      document.body.style.overflow = "";
+    };
 
-      document.body.style.overflow =
-        "";
+    const t = setTimeout(finish, 4800);
 
-    }, 5000);
-
+    intro.addEventListener(
+      "animationend",
+      (e) => {
+        if (e.animationName === "introFadeOut") {
+          clearTimeout(t);
+          finish();
+        }
+      }
+    );
   }
-
 </script>
 
 
 <style>
 
+  /* حالت حذف: اگر اسکریپت اول گفت نمایش نده */
+  html[data-intro-skip] .intro {
+    display: none !important;
+  }
+
+
   .intro {
     position: fixed;
-
     inset: 0;
-
     z-index: 9999;
 
     display: grid;
-
     place-items: center;
 
-    background:
-      var(--background);
-
+    background: var(--bg);
     overflow: hidden;
 
     animation:
-      introFadeOut
-      0.7s ease
-      4.2s
-      forwards;
+      introFadeOut 0.6s ease 4s forwards;
   }
 
 
   .intro-glow {
     position: absolute;
-
-    width: 420px;
-    height: 420px;
-
+    width: min(420px, 90vw);
+    height: min(420px, 90vw);
     border-radius: 50%;
 
     background:
@@ -133,231 +117,112 @@
       );
 
     filter: blur(30px);
-
-    animation:
-      introFadeIn
-      1.4s ease
-      both;
+    animation: fadeIn 1.2s ease both;
   }
 
 
   .intro-content {
     position: relative;
-
     display: flex;
-
     flex-direction: column;
-
     align-items: center;
-
     gap: 10px;
-
     padding: 20px;
-
     text-align: center;
   }
 
 
-  /* ==============================
-     نام — نوشته‌شدن با قلم
-  =============================== */
+  /* ---------- نام ---------- */
 
   .intro-name-wrap {
     position: relative;
   }
 
-
   .intro-name {
     margin: 0;
-
-    color:
-      var(--text);
-
-    font-size:
-      clamp(34px, 8vw, 72px);
-
+    color: var(--text);
+    font-size: clamp(32px, 8vw, 68px);
     font-weight: 800;
-
     line-height: 1.5;
 
-    /* شروع: همه‌چیز مخفی از سمت چپ */
-    clip-path:
-      inset(-20% -10% -20% 100%);
-
-    animation:
-      writeReveal
-      1.8s linear
-      0.4s
-      forwards;
+    clip-path: inset(-25% -12% -25% 100%);
+    animation: writeReveal 1.8s linear 0.4s forwards;
   }
-
-
-  /* قلمی که روی متن حرکت می‌کند */
 
   .intro-pen {
     position: absolute;
-
     top: 42%;
+    right: -0.15em;
 
-    right: -0.1em;
-
-    font-size:
-      clamp(22px, 4.5vw, 40px);
+    font-size: clamp(20px, 4.5vw, 38px);
+    transform: translateY(-55%) rotate(-14deg);
 
     opacity: 0;
-
-    transform:
-      translateY(-55%)
-      rotate(-12deg);
-
     animation:
       penShow 0.2s ease 0.35s both,
-      penMove
-      1.8s linear
-      0.4s
-      forwards;
+      penMove 1.8s linear 0.4s forwards,
+      penBob 0.3s ease-in-out 0.35s infinite alternate;
   }
 
 
-  .pen-body {
-    display: inline-block;
-
-    animation:
-      penBob
-      0.28s ease-in-out
-      infinite
-      alternate;
-  }
-
-
-  /* ==============================
-     شویار
-  =============================== */
-
-  .intro-penname-wrap {
-    position: relative;
-  }
-
+  /* ---------- شویار ---------- */
 
   .intro-penname {
-    display: block;
-
-    color:
-      var(--purple-light);
-
-    font-size:
-      clamp(20px, 4vw, 34px);
-
+    color: var(--purple);
+    font-size: clamp(18px, 4vw, 32px);
     font-weight: 700;
-
     line-height: 1.6;
 
-    clip-path:
-      inset(-20% -10% -20% 100%);
-
-    animation:
-      writeReveal
-      0.9s linear
-      2.35s
-      forwards;
+    clip-path: inset(-25% -12% -25% 100%);
+    animation: writeReveal 0.8s linear 2.45s forwards;
   }
 
 
-  /* ==============================
-     خط زیر
-  =============================== */
+  /* ---------- خط ---------- */
 
   .intro-line {
     width: 0;
     height: 3px;
-
-    margin-top: 18px;
-
+    margin-top: 16px;
     border-radius: 999px;
-
-    background:
-      var(--purple-gradient);
-
-    animation:
-      introLine
-      0.55s ease
-      3.35s
-      forwards;
+    background: var(--grad);
+    animation: drawLine 0.5s ease 3.25s forwards;
   }
 
 
-  /* ==============================
-     KEYFRAMES
-  =============================== */
+  /* ---------- Keyframes ---------- */
 
   @keyframes writeReveal {
-    from {
-      clip-path:
-        inset(-20% -10% -20% 100%);
-    }
-    to {
-      clip-path:
-        inset(-20% -10% -20% 0%);
-    }
+    from { clip-path: inset(-25% -12% -25% 100%); }
+    to   { clip-path: inset(-25% -12% -25% 0%); }
   }
-
 
   @keyframes penShow {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+    from { opacity: 0; }
+    to   { opacity: 1; }
   }
-
 
   @keyframes penMove {
-    from {
-      right: -0.1em;
-    }
-    to {
-      right: 100%;
-    }
+    from { right: -0.15em; }
+    to   { right: 100%; }
   }
-
 
   @keyframes penBob {
-    from {
-      transform:
-        translateY(-2px)
-        rotate(-3deg);
-    }
-    to {
-      transform:
-        translateY(2px)
-        rotate(2deg);
-    }
+    from { translate: 0 -2px; rotate: -3deg; }
+    to   { translate: 0 2px;  rotate: 2deg; }
   }
 
-
-  @keyframes introFadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+  @keyframes drawLine {
+    to { width: 92px; }
   }
 
-
-  @keyframes introLine {
-    to {
-      width: 90px;
-    }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
   }
-
 
   @keyframes introFadeOut {
-    to {
-      opacity: 0;
-      visibility: hidden;
-    }
+    to { opacity: 0; visibility: hidden; }
   }
 
 </style>
