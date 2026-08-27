@@ -16,33 +16,7 @@ import Intro from "../components/Intro.astro";
 
       <div class="container hero-grid">
 
-        <!-- ==============================
-             CONTENT
-        =============================== -->
-
-        <div class="hero-content">
-
-          <h1 class="hero-title">مریم شیروانی‌راد <span>«شویار»</span></h1>
-
-          <p class="hero-lead">
-            شعر و داستان؛ دو زبان برای روایت آدم‌ها،
-            احساسات و زندگی.
-          </p>
-
-          <p class="hero-description">
-            از سال ۱۳۹۱ به‌طور حرفه‌ای شعر می‌نویسم
-            و از سال ۱۳۹۳ داستان‌نویسی را دنبال می‌کنم.
-            جهان نوشتن برای من جایی‌ست برای دیدن
-            آنچه در زندگی روزمره کمتر دیده می‌شود.
-          </p>
-
-        </div>
-
-
-        <!-- ==============================
-             IMAGE
-        =============================== -->
-
+        <!-- IMAGE -->
         <div class="hero-visual">
 
           <div class="hero-glow"></div>
@@ -59,6 +33,25 @@ import Intro from "../components/Intro.astro";
 
         </div>
 
+        <!-- CONTENT -->
+        <div class="hero-content">
+
+          <h1 class="hero-title">مریم شیروانی‌راد <span>«شویار»</span></h1>
+
+          <p class="hero-lead">
+            شعر و داستان؛ دو زبان برای روایت آدم‌ها,
+            احساسات و زندگی.
+          </p>
+
+          <p class="hero-description">
+            از سال ۱۳۹۱ به‌طور حرفه‌ای شعر می‌نویسم
+            و از سال ۱۳۹۳ داستان‌نویسی را دنبال می‌کنم.
+            جهان نوشتن برای من جایی‌ست برای دیدن
+            آنچه در زندگی روزمره کمتر دیده می‌شود.
+          </p>
+
+        </div>
+
       </div>
 
     </section>
@@ -70,9 +63,7 @@ import Intro from "../components/Intro.astro";
 
 <style>
 
-  /* ========================================
-     PAGE
-  ======================================== */
+  /* ================= DESKTOP ================= */
 
   .home-page {
     position: relative;
@@ -80,278 +71,157 @@ import Intro from "../components/Intro.astro";
     overflow: hidden;
   }
 
-
-  /* ========================================
-     HERO
-  ======================================== */
-
   .hero {
     min-height: calc(100vh - 120px);
-
     display: flex;
     align-items: center;
-
-    padding:
-      clamp(45px, 6vw, 85px)
-      0;
+    padding: clamp(45px, 6vw, 85px) 0;
   }
-
 
   .hero-grid {
     width: 100%;
-
     display: grid;
-
     grid-template-columns:
-      minmax(0, 1.1fr)
-      minmax(340px, 0.9fr);
-
+      minmax(340px, 0.9fr)
+      minmax(0, 1.1fr);
     align-items: center;
-
-    gap:
-      clamp(50px, 8vw, 110px);
+    gap: clamp(50px, 8vw, 110px);
   }
-
-
-  /* ========================================
-     CONTENT
-  ======================================== */
 
   .hero-content {
     position: relative;
     z-index: 5;
-
     min-width: 0;
   }
 
-
   .hero-title {
-    max-width: none;
-
-    margin:
-      0
-      0
-      18px;
-
+    margin: 0 0 18px;
     color: var(--text);
-
-    font-size:
-      clamp(30px, 4.6vw, 50px);
-
+    font-size: clamp(30px, 4.6vw, 50px);
     font-weight: 800;
-
     line-height: 1.5;
-
     white-space: nowrap;
   }
-
 
   .hero-title span {
     color: var(--purple-light);
   }
 
-
   .hero-lead {
     max-width: 650px;
-
-    margin:
-      0
-      0
-      10px;
-
+    margin: 0 0 10px;
     color: var(--text);
-
-    font-size:
-      clamp(18px, 2vw, 23px);
-
+    font-size: clamp(18px, 2vw, 23px);
     font-weight: 600;
-
     line-height: 1.9;
   }
 
-
   .hero-description {
     max-width: 650px;
-
     margin: 0;
-
     color: var(--text-muted);
-
-    font-size:
-      clamp(15px, 1.5vw, 18px);
-
+    font-size: clamp(15px, 1.5vw, 18px);
     line-height: 2.2;
   }
 
-
-  /* ========================================
-     IMAGE
-  ======================================== */
-
   .hero-visual {
     position: relative;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
-    min-height: 560px;
+    min-height: 480px;
   }
-
 
   .hero-glow {
     position: absolute;
-
     width: 390px;
     height: 390px;
-
     border-radius: 50%;
-
-    background:
-      radial-gradient(
-        circle,
-        rgba(144, 67, 213, 0.48),
-        rgba(104, 33, 121, 0.17) 53%,
-        transparent 72%
-      );
-
+    background: radial-gradient(
+      circle,
+      rgba(144, 67, 213, 0.48),
+      rgba(104, 33, 121, 0.17) 53%,
+      transparent 72%
+    );
     filter: blur(7px);
   }
 
-
   .portrait-card {
     position: relative;
-
     z-index: 2;
-
-    width:
-      min(100%, 410px);
-
-    aspect-ratio:
-      4 / 5;
-
+    width: min(100%, 410px);
+    aspect-ratio: 4 / 5;
     padding: 9px;
-
     border-radius: 42px;
-
     overflow: hidden;
   }
 
-
   .portrait-image {
     display: block;
-
     width: 100%;
     height: 100%;
-
     object-fit: cover;
-
     border-radius: 34px;
   }
 
-
-  /* ========================================
-     TABLET
-  ======================================== */
-
-  @media (max-width: 950px) {
-
-    .hero {
-      min-height: auto;
-
-      padding:
-        40px
-        0
-        70px;
-    }
-
-
-    .hero-grid {
-      grid-template-columns: 1fr;
-
-      gap: 35px;
-    }
-
-
-    .hero-visual {
-      order: -1;
-
-      min-height: 500px;
-    }
-
-
-    .portrait-card {
-      width:
-        min(100%, 360px);
-    }
-
-  }
-
-
-  /* ========================================
-     MOBILE
-  ======================================== */
+  /* ================= MOBILE (ضدضربه) ================= */
 
   @media (max-width: 640px) {
 
     .hero {
+      display: block;
       min-height: auto;
-
-      padding:
-        30px
-        0
-        55px;
+      padding: 20px 0 45px;
     }
-
 
     .hero-grid {
-      gap: 25px;
+      display: block;
     }
-
 
     .hero-visual {
-      min-height: 400px;
+      display: block;
+      position: relative;
+      min-height: 0;
+      margin-bottom: 28px;
     }
-
-
-    .portrait-card {
-      width:
-        min(100%, 290px);
-
-      border-radius: 31px;
-    }
-
-
-    .portrait-image {
-      border-radius: 24px;
-    }
-
 
     .hero-glow {
-      width: 260px;
-      height: 260px;
+      width: 230px;
+      height: 230px;
+      left: 50%;
+      right: auto;
+      top: 50%;
+      transform: translate(-50%, -50%);
     }
-
-
-    .hero-title {
-      font-size:
-        clamp(24px, 6.8vw, 40px);
-
-      white-space: normal;
-    }
-
-  }
-
-
-  @media (max-width: 420px) {
-
-    .hero-visual {
-      min-height: 350px;
-    }
-
 
     .portrait-card {
-      width: 260px;
+      width: min(100%, 270px);
+      margin-inline: auto;
+      border-radius: 30px;
+    }
+
+    .portrait-image {
+      border-radius: 23px;
+    }
+
+    .hero-content {
+      display: block;
+      text-align: center;
+    }
+
+    .hero-title {
+      white-space: normal;
+      font-size: clamp(21px, 5.6vw, 30px);
+      line-height: 1.6;
+      overflow-wrap: anywhere;
+    }
+
+    .hero-lead {
+      font-size: 16px;
+    }
+
+    .hero-description {
+      font-size: 14px;
     }
 
   }
