@@ -1,17 +1,27 @@
 ---
 import "../styles/main.css";
 import Header from "../components/Header.astro";
+import { t } from "../data/i18n.js";
 
-interface Props { title?: string; description?: string }
+interface Props {
+  title?: string;
+  description?: string;
+  lang?: "fa" | "en";
+  langPath?: string; // مثل "/en" یا ""
+}
 
 const {
-  title = "مریم شیروانی‌راد | شویار",
+  title = t.fa.titles.home,
   description = "وب‌سایت رسمی مریم شیروانی‌راد، شاعر و داستان‌نویس",
+  lang = "fa",
+  langPath = "",
 } = Astro.props;
+
+const L = t[lang];
 ---
 
 <!doctype html>
-<html lang="fa" dir="rtl">
+<html lang={lang} dir={lang === "fa" ? "rtl" : "ltr"}>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -37,7 +47,7 @@ const {
   </script>
 </head>
 <body>
-  <Header />
+  <Header lang={lang} langPath={langPath} nav={L} />
   <main><slot /></main>
 </body>
 </html>

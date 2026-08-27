@@ -1,0 +1,13 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { t } from "../../data/i18n.js";
+const L = t.en;
+---
+
+<Layout lang="en" langPath="/en" title={L.titles.about} description={L.aboutBody}>
+  <div class="page container center">
+    <h1 class="section-title">{L.aboutTitle}</h1>
+    <img src="/maryam-shirvani.jpg" alt="Maryam Shirvani Rad" class="about-photo" />
+    <p style="max-width:600px;margin-inline:auto">{L.aboutBody}</p>
+  </div>
+</Layout>

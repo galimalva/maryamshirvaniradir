@@ -1,0 +1,41 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import stories from "../../data/stories.js";
+import poems from "../../data/poems.js";
+import { t } from "../../data/i18n.js";
+const L = t.en;
+---
+
+<Layout lang="en" langPath="/en" title={L.titles.works} description={L.worksSub}>
+  <div class="page container">
+    <h1 class="section-title">{L.worksTitle}</h1>
+    <p class="subtitle">{L.worksSub}</p>
+
+    <h2 class="section-title" style="font-size:clamp(20px,4vw,30px)">{L.stories}</h2>
+    <div class="stories-grid">
+      {stories.map((s) => (
+        <article class="card story-card">
+          {s.image && <img src={s.image} alt={s.title} class="story-img" />}
+          <span class="pill">{L.storyPill}</span>
+          <h3>{s.title}</h3>
+          <p class="story-excerpt">{s.excerpt}</p>
+          <a href={s.telegram} target="_blank" rel="noopener" class="btn">{L.moreTg}</a>
+        </article>
+      ))}
+    </div>
+
+    <h2 class="section-title" style="font-size:clamp(20px,4vw,30px);margin-top:56px">{L.poems}</h2>
+    <div class="poems-grid">
+      {poems.map((p) => (
+        <article class="card poem-card">
+          <div class="year-row">
+            <span class="poem-meta">{p.date}</span>
+            <span class="pill">{L.poemPill}</span>
+          </div>
+          <h3>{p.title}</h3>
+          <p class="poem-text">{p.text}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</Layout>

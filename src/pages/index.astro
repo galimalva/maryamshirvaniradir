@@ -3,12 +3,31 @@ import Layout from "../layouts/Layout.astro";
 import Intro from "../components/Intro.astro";
 ---
 
-<Layout description="وب‌سایت رسمی مریم شیروانی‌راد">
+<Layout description="وب‌سایت رسمی مریم شیروانی‌راد، شاعر و داستان‌نویس">
   <Intro />
   <div class="page container">
-    <h1 class="hero-title">مریم شیروانی‌راد <span>«شویار»</span></h1>
-    <p class="hero-line1">شعر و داستان؛ دو زبان برای روایت آدم‌ها، احساسات و زندگی.</p>
-    <p class="hero-line2">از سال ۱۳۹۱ به‌طور حرفه‌ای شعر می‌نویسم و از سال ۱۳۹۳ داستان‌نویسی را دنبال می‌کنم.</p>
-    <img src="/maryam-shirvani.jpg" alt="مریم شیروانی‌راد" class="portrait" />
+
+    <section class="hero-split">
+
+      <div class="hero-text">
+        <h1 class="hero-title">مریم شیروانی‌راد <span>«شویار»</span></h1>
+        <p class="hero-line1">
+          شاعر و داستان‌نویس؛ از سال ۱۳۹۱ به‌طور حرفه‌ای شعر می‌نویسم
+          و از سال ۱۳۹۳ داستان‌نویسی را دنبال می‌کنم.
+        </p>
+        <p class="hero-line2">
+          جهان نوشتن برای من جایی‌ست برای دیدن
+          آنچه در زندگی روزمره کمتر دیده می‌شود.
+        </p>
+      </div>
+
+      <img
+        src="/maryam-shirvani.jpg"
+        alt="مریم شیروانی‌راد"
+        class="hero-portrait"
+      />
+
+    </section>
+
   </div>
 </Layout>

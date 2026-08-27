@@ -1,0 +1,27 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { t } from "../../data/i18n.js";
+const L = t.en;
+const socials = [
+  { n: "Instagram", href: "https://www.instagram.com/shooyar1764/", ext: true,
+    svg: '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/>' },
+  { n: "Telegram", href: "https://t.me/shooyar1764", ext: true,
+    svg: '<path d="M21 3 3.8 9.8c-.9.4-.8 1.7.2 1.9l4.6 1.2 1.8 5.6c.3.9 1.5 1.1 2.1.4L21 4.2c.5-.8-.2-1.6-1-1.2Z"/><path d="m9 13 7.5-5.5"/>' },
+  { n: "Email", href: "mailto:shooyar1764@gmail.com", ext: false,
+    svg: '<rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/>' },
+];
+---
+
+<Layout lang="en" langPath="/en" title={L.titles.contact} description={L.contactSub}>
+  <div class="page container center">
+    <h1 class="section-title">{L.contactTitle}</h1>
+    <p class="subtitle">{L.contactSub}</p>
+    <div class="social-row">
+      {socials.map((s) => (
+        <a class="social-icon" href={s.href} aria-label={s.n} target={s.ext ? "_blank" : undefined} rel={s.ext ? "noopener" : undefined}>
+          <Fragment set:html={`<svg viewBox="0 0 24 24">${s.svg}</svg>`} />
+        </a>
+      ))}
+    </div>
+  </div>
+</Layout>

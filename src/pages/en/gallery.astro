@@ -1,47 +1,39 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import gallery from "../data/gallery.js";
+import Layout from "../../layouts/Layout.astro";
+import gallery from "../../data/gallery.js";
+import { t } from "../../data/i18n.js";
+const L = t.en;
 ---
 
-<Layout title="گالری | شویار">
+<Layout lang="en" langPath="/en" title={L.titles.gallery} description={L.galleryHint}>
   <div class="page container">
-
-    <h1 class="section-title">لحظه‌هایی از <span>مسیر ادبی</span></h1>
-    <p class="subtitle">روی هر عکس کلیک کنید تا بزرگ شود.</p>
+    <h1 class="section-title">{L.galleryTitle}</h1>
+    <p class="subtitle">{L.gallerySub}</p>
 
     <div class="gallery-page">
-
-      {
-        gallery.map((g) => (
-          <figure class={"card gallery-item" + (g.tall ? " tall" : "")} style="margin:0">
-            <img
-              src={g.image}
-              alt={g.caption}
-              loading="lazy"
-              data-full={g.image}
-              data-caption={g.caption}
-            />
-            <figcaption class="gallery-caption">{g.caption}</figcaption>
-          </figure>
-        ))
-      }
-
+      {gallery.map((g) => (
+        <figure class={"card gallery-item" + (g.tall ? " tall" : "")} style="margin:0">
+          <img
+            src={g.image}
+            alt={g.caption}
+            loading="lazy"
+            data-full={g.image}
+            data-caption={g.caption}
+          />
+          <figcaption class="gallery-caption">{g.caption}</figcaption>
+        </figure>
+      ))}
     </div>
-
   </div>
 
-  <!-- پنجرهٔ بزرگ‌نمایی -->
   <div class="lightbox" id="lightbox">
-    <button class="lightbox-close" id="lightbox-close" aria-label="بستن">✕</button>
+    <button class="lightbox-close" id="lightbox-close" aria-label={L.close}>✕</button>
     <img id="lightbox-img" src="" alt="" />
     <div class="lightbox-caption" id="lightbox-caption"></div>
   </div>
-
 </Layout>
 
-
 <script>
-
   const lightbox = document.getElementById("lightbox");
   const lightboxImg = document.getElementById("lightbox-img");
   const lightboxCaption = document.getElementById("lightbox-caption");
@@ -62,19 +54,16 @@ import gallery from "../data/gallery.js";
   };
 
   document.querySelectorAll<HTMLImageElement>(".gallery-item img").forEach((img) => {
-    img.addEventListener("click", () => openLightbox(img.dataset.full || "", img.dataset.caption || ""));
+    img.addEventListener("click", () =>
+      openLightbox(img.dataset.full || "", img.dataset.caption || "")
+    );
   });
 
   closeBtn?.addEventListener("click", closeLightbox);
-
-  // کلیک روی پس‌زمینه = بستن
   lightbox?.addEventListener("click", (e) => {
     if (e.target === lightbox) closeLightbox();
   });
-
-  // دکمهٔ ESC = بستن
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") closeLightbox();
   });
-
 </script>

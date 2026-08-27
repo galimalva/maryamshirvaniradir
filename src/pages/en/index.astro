@@ -1,0 +1,29 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Intro from "../../components/Intro.astro";
+import { t } from "../../data/i18n.js";
+const L = t.en;
+---
+
+<Layout lang="en" langPath="/en" title={L.titles.home} description={L.homeLead}>
+  <Intro lang="en" />
+  <div class="page container">
+
+    <section class="hero-split">
+
+      <div class="hero-text">
+        <h1 class="hero-title">{L.homeTitle}</h1>
+        <p class="hero-line1">{L.homeLead}</p>
+        <p class="hero-line2">{L.homeLine2}</p>
+      </div>
+
+      <img
+        src="/maryam-shirvani.jpg"
+        alt="Maryam Shirvani Rad"
+        class="hero-portrait"
+      />
+
+    </section>
+
+  </div>
+</Layout>

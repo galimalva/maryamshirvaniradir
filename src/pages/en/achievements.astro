@@ -1,0 +1,25 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { t } from "../../data/i18n.js";
+const L = t.en;
+const rows = [
+  { y: "2012", t: "Professional poetry began", d: "The serious start of my poetic path as “Shooyar”." },
+  { y: "2014", t: "Entering fiction", d: "Expanding from poetry to narrative and story." },
+  { y: "Award", t: "Selected at the Iran Jan Festival", d: "Chosen in the poetry section of the “Iran Jan” festival." },
+];
+---
+
+<Layout lang="en" langPath="/en" title={L.titles.achievements} description={L.achTitle}>
+  <div class="page container">
+    <h1 class="section-title">{L.achTitle}</h1>
+    <div class="timeline" style="margin-top:30px">
+      {rows.map((r) => (
+        <article class="card t-item">
+          <span class="t-year">{r.y}</span>
+          <h3 style="margin:0">{r.t}</h3>
+          <p style="margin:0">{r.d}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</Layout>

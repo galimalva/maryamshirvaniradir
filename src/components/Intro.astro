@@ -1,3 +1,7 @@
+---
+const { lang = "fa" } = Astro.props;
+---
+
 <!-- ==============================
      INTRO — نوشته‌شدن با قلم (v2)
 ================================ -->
@@ -9,11 +13,11 @@
   <div class="intro-content">
 
     <div class="intro-name-wrap">
-      <p class="intro-name">مریم شیروانی‌راد</p>
+      <p class="intro-name">{lang === "en" ? "Maryam Shirvani Rad" : "مریم شیروانی‌راد"}</p>
       <span class="intro-pen" aria-hidden="true">✒️</span>
     </div>
 
-    <span class="intro-penname">«شویار»</span>
+    <span class="intro-penname">{lang === "en" ? "“Shooyar”" : "«شویار»"}</span>
 
     <span class="intro-line"></span>
 

@@ -1,26 +1,56 @@
 ---
 import Layout from "../layouts/Layout.astro";
-
-const works = [
-  { t: "نام اثر اول", y: "۱۴۰۳", d: "مجموعه‌ای از شعرها با تمرکز بر تجربه‌های انسانی." },
-  { t: "نام اثر دوم", y: "۱۴۰۲", d: "روایتی اجتماعی از انتخاب‌های دشوار." },
-  { t: "نام اثر سوم", y: "۱۴۰۱", d: "داستان‌هایی درباره فاصله‌ها و امید." },
-  { t: "نام اثر چهارم", y: "۱۴۰۰", d: "شعرهایی با حال‌وهوای انسانی و اجتماعی." },
-];
+import stories from "../data/stories.js";
+import poems from "../data/poems.js";
 ---
 
 <Layout title="آثار | شویار">
   <div class="page container">
+
     <h1 class="section-title">آثار <span>شویار</span></h1>
-    <p class="subtitle">بخشی از مسیر ادبی، از شعر تا داستان.</p>
-    <div class="cards-2">
-      {works.map((w) => (
-        <article class="card work-card">
-          <div class="year-row"><span>{w.y}</span><span class="pill">اثر</span></div>
-          <h3>{w.t}</h3>
-          <p style="margin:0">{w.d}</p>
-        </article>
-      ))}
-    </div>
+    <p class="subtitle">داستان‌ها و شعرهایی که ادامه یا مجموعه‌شان در تلگرام منتشر می‌شود.</p>
+
+    <!-- داستان‌ها -->
+    <section>
+      <h2 class="section-title" style="font-size:clamp(20px,4vw,30px)">داستان‌ها</h2>
+
+      <div class="stories-grid">
+        {
+          stories.map((s) => (
+            <article class="card story-card">
+              {s.image && <img src={s.image} alt={s.title} class="story-img" />}
+              <span class="pill">{s.type}</span>
+              <h3>{s.title}</h3>
+              <p class="story-excerpt">{s.excerpt}</p>
+              <a href={s.telegram} target="_blank" rel="noopener" class="btn">
+                ادامه در تلگرام ←
+              </a>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- شعرها -->
+    <section style="margin-top:70px">
+      <h2 class="section-title" style="font-size:clamp(20px,4vw,30px)">شعرها</h2>
+
+      <div class="poems-grid">
+        {
+          poems.map((p) => (
+            <article class="card poem-card">
+              <div class="year-row">
+                <span class="poem-meta">{p.date}</span>
+                <span class="pill">شعر</span>
+              </div>
+              <h3>{p.title}</h3>
+              <div class="poem-divider"></div>
+              <p class="poem-text">{p.text}</p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
   </div>
 </Layout>

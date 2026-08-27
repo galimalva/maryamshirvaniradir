@@ -1,32 +1,59 @@
 ---
-const currentPath = Astro.url.pathname;
-const navItems = [
-  { label: "خانه", href: "/" },
-  { label: "درباره من", href: "/about" },
-  { label: "آثار", href: "/works" },
-  { label: "گالری", href: "/gallery" },
-  { label: "افتخارات", href: "/achievements" },
-  { label: "ارتباط", href: "/contact" },
+import { t } from "../data/i18n.js";
+
+const { lang = "fa", langPath = "", nav } = Astro.props;
+const L = nav ?? t.fa;
+
+const items = [
+  { label: L.home, href: `${langPath}/` },
+  { label: L.about, href: `${langPath}/about` },
+  { label: L.works, href: `${langPath}/works` },
+  { label: L.gallery, href: `${langPath}/gallery` },
+  { label: L.achievements, href: `${langPath}/achievements` },
+  { label: L.contact, href: `${langPath}/contact` },
 ];
-const isActive = (href: string) =>
-  href === "/" ? currentPath === "/" : currentPath.startsWith(href);
+
+const currentPath = Astro.url.pathname;
+const isActive = (href: string) => {
+  const clean = href.replace(/\/$/, "");        // مثلا "/en/works" → "/en/works"
+  const path = currentPath.replace(/\/$/, "");  // مسیر فعلی بدون اسلش آخر
+
+  // صفحهٔ خانه: دقیقاً "/" یا "/en"
+  if (clean === "" || clean === "/en") {
+    return path === "" || path === "/en";
+  }
+
+  // بقیه صفحات: مسیر فعلی دقیقاً همان یا زیرمجموعهٔ آن
+  return path === clean || path.startsWith(clean + "/");
+};
+const otherLang = lang === "fa" ? "en" : "fa";
+const switchHref =
+  lang === "fa"
+    ? "/en" + (currentPath === "/" ? "/" : currentPath)
+    : currentPath.replace(/^\/en/, "") || "/";
 ---
 
 <header class="site-header">
   <div class="container">
     <div class="nav-row">
 
-      <a class="brand" href="/">شویـ<span>ار</span></a>
+      <div style="width:78px" aria-hidden="true"></div>
 
-      <nav class="main-nav" id="main-nav" aria-label="منو">
-        {navItems.map((it) => (
+      <nav class="main-nav" id="main-nav" aria-label={L.menu}>
+        {items.map((it) => (
           <a href={it.href} class={isActive(it.href) ? "active" : ""}>{it.label}</a>
         ))}
       </nav>
 
       <div class="btn-group">
-        <button id="theme-btn" class="icon-btn" aria-label="حالت روشن/تاریک">🌙</button>
-        <button id="menu-btn" class="icon-btn" aria-label="منو">☰</button>
+        <a class="lang-btn" href={switchHref}>{otherLang === "en" ? "EN" : "فا"}</a>
+        <button id="theme-btn" class="theme-toggle" type="button" aria-label={L.theme} aria-pressed="false">
+          <span class="stars" aria-hidden="true"></span>
+          <span class="clouds" aria-hidden="true"></span>
+          <span class="sun" aria-hidden="true"></span>
+          <span class="orb" aria-hidden="true"></span>
+        </button>
+        <button id="menu-btn" class="icon-btn" aria-label={L.menu}>☰</button>
       </div>
 
     </div>
@@ -38,16 +65,18 @@ const isActive = (href: string) =>
   const nav = document.getElementById("main-nav");
   menuBtn?.addEventListener("click", () => nav?.classList.toggle("open"));
 
-  const applyIcon = () => {
-    const dark = document.documentElement.dataset.theme === "dark";
-    const btn = document.getElementById("theme-btn");
-    if (btn) btn.textContent = dark ? "☀️" : "🌙";
-  };
-  applyIcon();
-  document.getElementById("theme-btn")?.addEventListener("click", () => {
-    const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+  const themeBtn = document.getElementById("theme-btn");
+  const sync = () =>
+    themeBtn?.setAttribute(
+      "aria-pressed",
+      document.documentElement.dataset.theme === "dark" ? "true" : "false"
+    );
+  sync();
+  themeBtn?.addEventListener("click", () => {
+    const next =
+      document.documentElement.dataset.theme === "dark" ? "light" : "dark";
     document.documentElement.dataset.theme = next;
     try { localStorage.setItem("site-theme", next); } catch {}
-    applyIcon();
+    sync();
   });
 </script>
