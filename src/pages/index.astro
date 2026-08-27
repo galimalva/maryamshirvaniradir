@@ -16,24 +16,7 @@ import Intro from "../components/Intro.astro";
 
       <div class="container hero-grid">
 
-        <!-- IMAGE -->
-        <div class="hero-visual">
-
-          <div class="hero-glow"></div>
-
-          <div class="portrait-card glass">
-
-            <img
-              src="/maryam-shirvani.jpg"
-              alt="مریم شیروانی‌راد"
-              class="portrait-image"
-            />
-
-          </div>
-
-        </div>
-
-        <!-- CONTENT -->
+        <!-- CONTENT (اول) -->
         <div class="hero-content">
 
           <h1 class="hero-title">مریم شیروانی‌راد <span>«شویار»</span></h1>
@@ -52,6 +35,23 @@ import Intro from "../components/Intro.astro";
 
         </div>
 
+        <!-- IMAGE (بعد) -->
+        <div class="hero-visual">
+
+          <div class="hero-glow"></div>
+
+          <div class="portrait-card glass">
+
+            <img
+              src="/maryam-shirvani.jpg"
+              alt="مریم شیروانی‌راد"
+              class="portrait-image"
+            />
+
+          </div>
+
+        </div>
+
       </div>
 
     </section>
@@ -63,8 +63,6 @@ import Intro from "../components/Intro.astro";
 
 <style>
 
-  /* ================= DESKTOP ================= */
-
   .home-page {
     position: relative;
     width: 100%;
@@ -72,35 +70,29 @@ import Intro from "../components/Intro.astro";
   }
 
   .hero {
-    min-height: calc(100vh - 120px);
-    display: flex;
-    align-items: center;
-    padding: clamp(45px, 6vw, 85px) 0;
+    display: block;
+    padding: 20px 0 55px;
   }
 
   .hero-grid {
+    display: block;
     width: 100%;
-    display: grid;
-    grid-template-columns:
-      minmax(340px, 0.9fr)
-      minmax(0, 1.1fr);
-    align-items: center;
-    gap: clamp(50px, 8vw, 110px);
   }
 
+  /* ---- متن: اول و بالا ---- */
+
   .hero-content {
-    position: relative;
-    z-index: 5;
-    min-width: 0;
+    display: block;
+    text-align: center;
+    margin-bottom: 30px;
   }
 
   .hero-title {
-    margin: 0 0 18px;
+    margin: 0 0 14px;
     color: var(--text);
-    font-size: clamp(30px, 4.6vw, 50px);
+    font-size: clamp(22px, 5.5vw, 46px);
     font-weight: 800;
-    line-height: 1.5;
-    white-space: nowrap;
+    line-height: 1.55;
   }
 
   .hero-title span {
@@ -109,50 +101,54 @@ import Intro from "../components/Intro.astro";
 
   .hero-lead {
     max-width: 650px;
-    margin: 0 0 10px;
+    margin: 0 auto 10px;
     color: var(--text);
-    font-size: clamp(18px, 2vw, 23px);
+    font-size: clamp(16px, 2vw, 22px);
     font-weight: 600;
     line-height: 1.9;
   }
 
   .hero-description {
     max-width: 650px;
-    margin: 0;
+    margin: 0 auto;
     color: var(--text-muted);
-    font-size: clamp(15px, 1.5vw, 18px);
+    font-size: clamp(14px, 1.6vw, 18px);
     line-height: 2.2;
   }
 
+  /* ---- عکس: زیر متن ---- */
+
   .hero-visual {
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 480px;
+    display: block;
+    width: 100%;
   }
 
   .hero-glow {
     position: absolute;
-    width: 390px;
-    height: 390px;
+    width: 300px;
+    height: 300px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 50%;
     background: radial-gradient(
       circle,
-      rgba(144, 67, 213, 0.48),
-      rgba(104, 33, 121, 0.17) 53%,
+      rgba(144, 67, 213, 0.45),
+      rgba(104, 33, 121, 0.15) 53%,
       transparent 72%
     );
-    filter: blur(7px);
+    filter: blur(8px);
   }
 
   .portrait-card {
     position: relative;
     z-index: 2;
-    width: min(100%, 410px);
-    aspect-ratio: 4 / 5;
+    width: min(70vw, 340px);
+    height: 420px;
+    margin-inline: auto;
     padding: 9px;
-    border-radius: 42px;
+    border-radius: 38px;
     overflow: hidden;
   }
 
@@ -161,69 +157,8 @@ import Intro from "../components/Intro.astro";
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 34px;
-  }
-
-  /* ================= MOBILE (ضدضربه) ================= */
-
-  @media (max-width: 640px) {
-
-    .hero {
-      display: block;
-      min-height: auto;
-      padding: 20px 0 45px;
-    }
-
-    .hero-grid {
-      display: block;
-    }
-
-    .hero-visual {
-      display: block;
-      position: relative;
-      min-height: 0;
-      margin-bottom: 28px;
-    }
-
-    .hero-glow {
-      width: 230px;
-      height: 230px;
-      left: 50%;
-      right: auto;
-      top: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    .portrait-card {
-      width: min(100%, 270px);
-      margin-inline: auto;
-      border-radius: 30px;
-    }
-
-    .portrait-image {
-      border-radius: 23px;
-    }
-
-    .hero-content {
-      display: block;
-      text-align: center;
-    }
-
-    .hero-title {
-      white-space: normal;
-      font-size: clamp(21px, 5.6vw, 30px);
-      line-height: 1.6;
-      overflow-wrap: anywhere;
-    }
-
-    .hero-lead {
-      font-size: 16px;
-    }
-
-    .hero-description {
-      font-size: 14px;
-    }
-
+    object-position: center top;
+    border-radius: 31px;
   }
 
 </style>
