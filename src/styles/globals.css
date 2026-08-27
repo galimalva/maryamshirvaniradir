@@ -35,7 +35,7 @@ body {
     var(--text);
 
   font-family:
-    "Vazirmatn",
+    "Shabnam",
     Tahoma,
     Arial,
     sans-serif;
@@ -67,37 +67,16 @@ h6 {
     var(--text);
 
   font-family:
-    "Noto Serif Arabic",
-    "Vazirmatn",
-    serif;
+    "Lalezar",
+    "Shabnam",
+    Tahoma,
+    sans-serif;
 
-  font-weight: 700;
-
-  line-height: 1.55;
-}
-
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin-top: 0;
-
-  color:
-    var(--text);
-
-  font-family:
-    "Noto Serif Arabic",
-    "Vazirmatn",
-    serif;
-
-  font-weight: 700;
-
-  line-height: 1.55;
+  font-weight: 400;
 
   letter-spacing: 0;
+
+  line-height: 1.65;
 }
 
 
@@ -116,7 +95,7 @@ input,
 textarea,
 select {
   font-family:
-    "Vazirmatn",
+    "Shabnam",
     Tahoma,
     Arial,
     sans-serif;
@@ -286,7 +265,7 @@ img {
 
 
 /* ========================================
-   PAGE
+   PAGE / SECTION
 ======================================== */
 
 .page {
@@ -296,25 +275,13 @@ img {
     calc(100vh - 90px);
 
   padding-block:
-    clamp(
-      44px,
-      7vw,
-      100px
-    );
+    clamp(44px, 7vw, 100px);
 }
 
 
-/* ========================================
-   SECTION
-======================================== */
-
 .section {
   padding-block:
-    clamp(
-      50px,
-      8vw,
-      110px
-    );
+    clamp(50px, 8vw, 110px);
 }
 
 
@@ -345,7 +312,7 @@ img {
 
 
 /* ========================================
-   PRIMARY BUTTON
+   BUTTONS
 ======================================== */
 
 .btn-primary {
@@ -373,7 +340,7 @@ img {
     var(--purple-gradient);
 
   font-family:
-    "Vazirmatn",
+    "Shabnam",
     sans-serif;
 
   font-weight: 600;
@@ -407,10 +374,6 @@ img {
     scale(0.98);
 }
 
-
-/* ========================================
-   GLASS BUTTON
-======================================== */
 
 .btn-glass {
   display: inline-flex;
@@ -477,7 +440,7 @@ img {
 
 
 /* ========================================
-   SELECTION
+   EXTRAS
 ======================================== */
 
 ::selection {
@@ -487,10 +450,6 @@ img {
     var(--purple-main);
 }
 
-
-/* ========================================
-   SCROLLBAR
-======================================== */
 
 ::-webkit-scrollbar {
   width: 9px;
@@ -515,10 +474,6 @@ img {
 }
 
 
-/* ========================================
-   ACCESSIBILITY
-======================================== */
-
 :focus-visible {
   outline:
     2px solid
@@ -526,122 +481,4 @@ img {
 
   outline-offset:
     4px;
-}
-
-
-/* ========================================
-   TABLET
-======================================== */
-
-@media (max-width: 900px) {
-
-  .container {
-    max-width: 760px;
-  }
-
-}
-
-
-/* ========================================
-   MOBILE
-======================================== */
-
-@media (max-width: 600px) {
-
-  body {
-    font-size:
-      15px;
-
-    line-height:
-      1.85;
-  }
-
-
-  .page {
-    padding-block:
-      36px 60px;
-  }
-
-
-  .section {
-    padding-block:
-      48px;
-  }
-
-
-  .glass {
-    border-radius:
-      22px;
-  }
-
-
-  h1,
-  h2,
-  h3 {
-    overflow-wrap:
-      anywhere;
-  }
-
-
-  .btn-primary,
-  .btn-glass {
-    min-height:
-      48px;
-
-    padding:
-      11px 18px;
-
-    border-radius:
-      15px;
-  }
-
-}
-
-
-/* ========================================
-   VERY SMALL PHONES
-======================================== */
-
-@media (max-width: 380px) {
-
-  body {
-    font-size:
-      14px;
-  }
-
-
-  .btn-primary,
-  .btn-glass {
-    padding-inline:
-      14px;
-  }
-
-}
-
-
-/* ========================================
-   REDUCED MOTION
-======================================== */
-
-@media (
-  prefers-reduced-motion:
-  reduce
-) {
-
-  *,
-  *::before,
-  *::after {
-    scroll-behavior:
-      auto !important;
-
-    animation-duration:
-      0.01ms !important;
-
-    animation-iteration-count:
-      1 !important;
-
-    transition-duration:
-      0.01ms !important;
-  }
-
 }
