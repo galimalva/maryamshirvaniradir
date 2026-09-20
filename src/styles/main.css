@@ -494,3 +494,183 @@ html[dir="ltr"] body{font-family:"Shabnam",Arial,sans-serif}
   }
 
 }
+/* ---------- rocker wall switch (day/night) ---------- */
+
+.tt-float{
+  position:fixed;
+  top:88px;
+  left:14px;
+  z-index:300;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+}
+
+@media (min-width:900px){
+  .tt-float{
+    left:28px;
+    top:110px;
+  }
+}
+
+/* بدنهٔ کلید */
+.theme-switch{
+  position:relative;
+  width:56px;
+  height:118px;
+  border-radius:30px;
+  border:0;
+  padding:0;
+  cursor:pointer;
+  background:linear-gradient(180deg,#f8f7fb 0%,#e8e6ee 100%);
+  box-shadow:
+    inset 0 2px 4px rgba(255,255,255,.95),
+    inset 0 -3px 6px rgba(90,70,110,.16),
+    0 12px 26px rgba(80,60,110,.20),
+    0 0 0 1px rgba(255,255,255,.5);
+  transition:box-shadow .45s ease, background .45s ease;
+}
+
+html[data-theme="dark"] .theme-switch{
+  background:linear-gradient(180deg,#262130 0%,#171420 100%);
+  box-shadow:
+    inset 0 2px 4px rgba(255,255,255,.07),
+    inset 0 -3px 6px rgba(0,0,0,.55),
+    0 12px 28px rgba(0,0,0,.55),
+    0 0 28px rgba(255,79,216,.40),
+    0 0 0 1px rgba(255,255,255,.06);
+}
+
+/* علائم ثابت روی بدنه */
+.tt-label{
+  position:absolute;
+  left:0; right:0;
+  display:grid;
+  place-items:center;
+  pointer-events:none;
+}
+.tt-label-on{ top:13px }
+.tt-label-off{ bottom:13px }
+
+.tt-bar{
+  width:3px; height:16px;
+  border-radius:2px;
+  background:rgba(60,50,75,.5);
+}
+.tt-ring{
+  width:14px; height:14px;
+  border:3px solid rgba(60,50,75,.5);
+  border-radius:50%;
+}
+html[data-theme="dark"] .tt-bar{ background:rgba(232,226,240,.38) }
+html[data-theme="dark"] .tt-ring{ border-color:rgba(232,226,240,.38) }
+
+/* دکمهٔ متحرک */
+.tt-knob{
+  position:absolute;
+  left:4px;
+  top:4px;
+  width:48px;
+  height:52px;
+  border-radius:26px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(180deg,#fdfcff 0%,#eceaf2 100%);
+  box-shadow:
+    0 7px 16px rgba(80,60,110,.28),
+    inset 0 2px 3px rgba(255,255,255,.95);
+  transition:
+    top .45s cubic-bezier(.45,1.35,.5,1),
+    background .45s ease,
+    box-shadow .45s ease;
+  z-index:2;
+}
+
+html[data-theme="dark"] .tt-knob{
+  top:calc(100% - 56px);
+  background:linear-gradient(180deg,#37303f 0%,#231d2c 100%);
+  box-shadow:
+    0 7px 16px rgba(0,0,0,.5),
+    inset 0 2px 3px rgba(255,255,255,.09),
+    0 0 20px rgba(255,79,216,.30);
+}
+
+/* علامت روی دکمه: I در روز، O در شب */
+.tt-knob-mark{
+  position:relative;
+  width:16px; height:16px;
+  display:block;
+}
+.tt-knob-mark::before,
+.tt-knob-mark::after{
+  content:"";
+  position:absolute;
+  left:50%; top:50%;
+  translate:-50% -50%;
+  transition:opacity .35s ease;
+}
+.tt-knob-mark::before{ /* I */
+  width:3px; height:16px;
+  border-radius:2px;
+  background:#3c3249;
+  opacity:1;
+}
+.tt-knob-mark::after{ /* O */
+  width:13px; height:13px;
+  border:3px solid #3c3249;
+  border-radius:50%;
+  opacity:0;
+}
+html[data-theme="dark"] .tt-knob-mark::before{ opacity:0 }
+html[data-theme="dark"] .tt-knob-mark::after{
+  opacity:1;
+  border-color:#eae4f2;
+}
+
+/* نشانگر کوچک زیر کلید */
+.tt-badge{
+  width:30px; height:30px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  font-size:14px;
+  background:radial-gradient(circle at 35% 30%, rgba(255,255,255,.95), rgba(228,223,238,.55));
+  box-shadow:
+    0 4px 12px rgba(80,60,110,.25),
+    0 0 14px rgba(144,67,213,.35);
+  transition:box-shadow .45s ease, background .45s ease;
+}
+html[data-theme="dark"] .tt-badge{
+  background:radial-gradient(circle at 35% 30%, #3a3145, #241f2e);
+  box-shadow:
+    0 4px 12px rgba(0,0,0,.45),
+    0 0 18px rgba(144,67,213,.55);
+}
+
+/* موبایل: جمع‌وجورتر و پایین-چپ تا با متن تداخل نکند */
+@media (max-width:640px){
+  .tt-float{
+    top:auto;
+    bottom:16px;
+    left:10px;
+    gap:8px;
+  }
+  .theme-switch{
+    width:48px;
+    height:100px;
+    border-radius:26px;
+  }
+  .tt-knob{
+    width:40px;
+    height:44px;
+    left:4px;
+  }
+  html[data-theme="dark"] .tt-knob{
+    top:calc(100% - 48px);
+  }
+  .tt-badge{
+    width:26px; height:26px;
+    font-size:12px;
+  }
+}

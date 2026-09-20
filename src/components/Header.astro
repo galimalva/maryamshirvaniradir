@@ -15,17 +15,14 @@ const items = [
 
 const currentPath = Astro.url.pathname;
 const isActive = (href: string) => {
-  const clean = href.replace(/\/$/, "");        // مثلا "/en/works" → "/en/works"
-  const path = currentPath.replace(/\/$/, "");  // مسیر فعلی بدون اسلش آخر
-
-  // صفحهٔ خانه: دقیقاً "/" یا "/en"
+  const clean = href.replace(/\/$/, "");
+  const path = currentPath.replace(/\/$/, "");
   if (clean === "" || clean === "/en") {
     return path === "" || path === "/en";
   }
-
-  // بقیه صفحات: مسیر فعلی دقیقاً همان یا زیرمجموعهٔ آن
   return path === clean || path.startsWith(clean + "/");
 };
+
 const otherLang = lang === "fa" ? "en" : "fa";
 const switchHref =
   lang === "fa"
@@ -47,12 +44,6 @@ const switchHref =
 
       <div class="btn-group">
         <a class="lang-btn" href={switchHref}>{otherLang === "en" ? "EN" : "فا"}</a>
-        <button id="theme-btn" class="theme-toggle" type="button" aria-label={L.theme} aria-pressed="false">
-          <span class="stars" aria-hidden="true"></span>
-          <span class="clouds" aria-hidden="true"></span>
-          <span class="sun" aria-hidden="true"></span>
-          <span class="orb" aria-hidden="true"></span>
-        </button>
         <button id="menu-btn" class="icon-btn" aria-label={L.menu}>☰</button>
       </div>
 
@@ -60,18 +51,43 @@ const switchHref =
   </div>
 </header>
 
+
+<!-- کلید دیواری روز / شب -->
+<div class="tt-float">
+
+  <button
+    id="theme-btn"
+    class="theme-switch"
+    type="button"
+    aria-label={L.theme}
+    aria-pressed="false"
+  >
+    <span class="tt-label tt-label-on" aria-hidden="true"><i class="tt-bar"></i></span>
+    <span class="tt-label tt-label-off" aria-hidden="true"><i class="tt-ring"></i></span>
+    <span class="tt-knob" aria-hidden="true"><i class="tt-knob-mark"></i></span>
+  </button>
+
+  <span class="tt-badge" id="theme-badge" aria-hidden="true">☀️</span>
+
+</div>
+
+
 <script>
   const menuBtn = document.getElementById("menu-btn");
   const nav = document.getElementById("main-nav");
   menuBtn?.addEventListener("click", () => nav?.classList.toggle("open"));
 
   const themeBtn = document.getElementById("theme-btn");
-  const sync = () =>
-    themeBtn?.setAttribute(
-      "aria-pressed",
-      document.documentElement.dataset.theme === "dark" ? "true" : "false"
-    );
+  const badge = document.getElementById("theme-badge");
+
+  const sync = () => {
+    const dark = document.documentElement.dataset.theme === "dark";
+    themeBtn?.setAttribute("aria-pressed", dark ? "true" : "false");
+    if (badge) badge.textContent = dark ? "🌙" : "☀️";
+  };
+
   sync();
+
   themeBtn?.addEventListener("click", () => {
     const next =
       document.documentElement.dataset.theme === "dark" ? "light" : "dark";
