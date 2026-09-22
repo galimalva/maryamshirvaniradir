@@ -56,16 +56,18 @@ p{margin:0 0 12px;color:var(--muted)}
 /* ---------- header ---------- */
 .site-header{position:sticky;top:0;z-index:50;background:var(--header-bg);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
 .nav-row{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:58px}
+.nav-spacer{width:78px}
 .brand{font-weight:800;font-size:17px}
 .brand span{color:var(--purple)}
 .icon-btn{width:44px;height:44px;border:1px solid var(--border);border-radius:12px;display:grid;place-items:center;font-size:18px}
-.btn-group{display:flex;gap:8px}
+.btn-group{display:flex;align-items:center;gap:8px}
 .main-nav a{padding:11px 14px;border-radius:12px;color:var(--muted)}
 .main-nav a:hover,.main-nav a.active{background:rgba(144,67,213,.12);color:var(--text)}
 
-/* ✅ موبایل: همه تب‌ها همیشه در هدر، مثل کامپیوتر — بدون دکمه منو */
+/* موبایل: همه تب‌ها همیشه در هدر — بدون دکمه منو */
 @media (max-width:779px){
   #menu-btn{display:none}
+  .nav-spacer{display:none}
   .nav-row{flex-wrap:wrap}
   .main-nav{
     display:flex!important;
@@ -305,137 +307,6 @@ p{margin:0 0 12px;color:var(--muted)}
   cursor:zoom-in;
 }
 
-/* ---------- day / night toggle ---------- */
-.theme-toggle{
-  position:relative;
-  width:78px;
-  height:38px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.65);
-  background:linear-gradient(180deg,#7fc3f2 0%,#b8e0fb 55%,#eaf6ff 100%);
-  box-shadow:
-    0 6px 18px rgba(60,120,190,.35),
-    inset 0 1px 2px rgba(255,255,255,.7);
-  overflow:hidden;
-  cursor:pointer;
-  flex-shrink:0;
-  transition:background .5s ease, box-shadow .5s ease, border-color .5s ease;
-}
-
-/* آسمان شب */
-html[data-theme="dark"] .theme-toggle{
-  border-color:rgba(140,160,220,.35);
-  background:linear-gradient(180deg,#22315e 0%,#131b38 60%,#0c1226 100%);
-  box-shadow:
-    0 6px 18px rgba(10,15,40,.6),
-    inset 0 1px 2px rgba(255,255,255,.12);
-}
-
-/* خورشید */
-.theme-toggle .sun{
-  position:absolute;
-  right:10px;
-  top:50%;
-  translate:0 -50%;
-  width:19px;
-  height:19px;
-  border-radius:50%;
-  background:radial-gradient(circle at 35% 32%,#fff3b0,#f8cf3c 70%,#f0b71f);
-  box-shadow:0 0 14px rgba(255,214,80,.95);
-  transition:opacity .4s ease, translate .5s ease;
-}
-
-html[data-theme="dark"] .theme-toggle .sun{
-  opacity:0;
-  translate:0 calc(-50% + 14px);
-}
-
-/* ابرها */
-.theme-toggle .clouds{
-  position:absolute;
-  inset:auto 0 0 0;
-  height:55%;
-  pointer-events:none;
-  transition:opacity .5s ease;
-}
-
-.theme-toggle .clouds::before,
-.theme-toggle .clouds::after{
-  content:"";
-  position:absolute;
-  bottom:-6px;
-  height:18px;
-  border-radius:999px;
-  background:rgba(255,255,255,.85);
-}
-
-.theme-toggle .clouds::before{
-  right:14px;
-  width:52px;
-}
-
-.theme-toggle .clouds::after{
-  right:44px;
-  width:40px;
-  bottom:4px;
-  height:14px;
-  background:rgba(255,255,255,.55);
-}
-
-html[data-theme="dark"] .theme-toggle .clouds{
-  opacity:.18;
-}
-
-/* ستاره‌ها — فقط شب */
-.theme-toggle .stars{
-  position:absolute;
-  inset:0;
-  opacity:0;
-  transition:opacity .5s ease .15s;
-  pointer-events:none;
-  background-image:
-    radial-gradient(circle, #fff 1px, transparent 1.4px),
-    radial-gradient(circle, #cfe0ff 1px, transparent 1.4px);
-  background-size:44px 30px, 60px 42px;
-  background-position:6px 7px, 26px 18px;
-}
-
-html[data-theme="dark"] .theme-toggle .stars{
-  opacity:.9;
-}
-
-/* گوی — ماه/روز */
-.theme-toggle .orb{
-  position:absolute;
-  top:3px;
-  left:3px;
-  width:30px;
-  height:30px;
-  border-radius:50%;
-  background:radial-gradient(circle at 35% 30%,#ffffff,#e8edf4 60%,#cfd8e4);
-  box-shadow:
-    0 2px 8px rgba(0,0,0,.18),
-    0 0 12px rgba(255,255,255,.75),
-    inset -3px -3px 6px rgba(160,175,195,.35);
-  transition:left .45s cubic-bezier(.45,1.4,.45,1);
-  z-index:2;
-}
-
-html[data-theme="dark"] .theme-toggle .orb{
-  left:calc(100% - 33px);
-  box-shadow:
-    0 2px 8px rgba(0,0,0,.4),
-    0 0 16px rgba(220,230,255,.55),
-    inset -3px -3px 6px rgba(120,135,165,.45);
-}
-
-/* کمی کوچک‌تر در موبایل */
-@media (max-width:480px){
-  .theme-toggle{width:68px;height:34px}
-  .theme-toggle .orb{width:26px;height:26px}
-  html[data-theme="dark"] .theme-toggle .orb{left:calc(100% - 29px)}
-}
-
 /* ---------- lang button ---------- */
 .lang-btn{
   display:grid;place-items:center;
@@ -446,7 +317,135 @@ html[data-theme="dark"] .theme-toggle .orb{
 .lang-btn:hover{background:rgba(144,67,213,.1)}
 html[dir="ltr"] body{font-family:"Shabnam",Arial,sans-serif}
 
-/* ---------- home hero: big portrait + text ---------- */
+/* ---------- rocker switch — داخل هدر، کنار دکمه زبان ---------- */
+
+/* بدنهٔ کلید — افقی و جمع‌وجور */
+.theme-switch{
+  position:relative;
+  width:54px;
+  height:30px;
+  border-radius:999px;
+  border:0;
+  padding:0;
+  cursor:pointer;
+  flex-shrink:0;
+  background:linear-gradient(180deg,#f8f7fb 0%,#e8e6ee 100%);
+  box-shadow:
+    inset 0 2px 4px rgba(255,255,255,.95),
+    inset 0 -2px 4px rgba(90,70,110,.16),
+    0 4px 10px rgba(80,60,110,.18),
+    0 0 0 1px rgba(255,255,255,.5);
+  transition:box-shadow .45s ease, background .45s ease;
+}
+
+html[data-theme="dark"] .theme-switch{
+  background:linear-gradient(180deg,#262130 0%,#171420 100%);
+  box-shadow:
+    inset 0 2px 4px rgba(255,255,255,.07),
+    inset 0 -2px 4px rgba(0,0,0,.55),
+    0 4px 12px rgba(0,0,0,.45),
+    0 0 16px rgba(255,79,216,.35),
+    0 0 0 1px rgba(255,255,255,.06);
+}
+
+/* علائم ثابت: I چپ، O راست */
+.tt-label{
+  position:absolute;
+  top:0; bottom:0;
+  display:grid;
+  place-items:center;
+  pointer-events:none;
+}
+.tt-label-on{ left:9px; right:auto }
+.tt-label-off{ right:9px; left:auto }
+
+.tt-bar{
+  width:3px; height:12px;
+  border-radius:2px;
+  background:rgba(60,50,75,.5);
+}
+.tt-ring{
+  width:10px; height:10px;
+  border:3px solid rgba(60,50,75,.5);
+  border-radius:50%;
+}
+html[data-theme="dark"] .tt-bar{ background:rgba(232,226,240,.38) }
+html[data-theme="dark"] .tt-ring{ border-color:rgba(232,226,240,.38) }
+
+/* دکمهٔ متحرک — چپ (روز) ↔ راست (شب) */
+.tt-knob{
+  position:absolute;
+  left:3px;
+  top:3px;
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(180deg,#fdfcff 0%,#eceaf2 100%);
+  box-shadow:
+    0 3px 8px rgba(80,60,110,.28),
+    inset 0 2px 3px rgba(255,255,255,.95);
+  transition:
+    left .45s cubic-bezier(.45,1.35,.5,1),
+    background .45s ease,
+    box-shadow .45s ease;
+  z-index:2;
+}
+
+html[data-theme="dark"] .tt-knob{
+  left:calc(100% - 27px);
+  background:linear-gradient(180deg,#37303f 0%,#231d2c 100%);
+  box-shadow:
+    0 3px 8px rgba(0,0,0,.5),
+    inset 0 2px 3px rgba(255,255,255,.09),
+    0 0 12px rgba(255,79,216,.30);
+}
+
+/* علامت روی دکمه: I در روز، O در شب */
+.tt-knob-mark{
+  position:relative;
+  width:12px; height:12px;
+  display:block;
+}
+.tt-knob-mark::before,
+.tt-knob-mark::after{
+  content:"";
+  position:absolute;
+  left:50%; top:50%;
+  translate:-50% -50%;
+  transition:opacity .35s ease;
+}
+.tt-knob-mark::before{ /* I */
+  width:2.5px; height:12px;
+  border-radius:2px;
+  background:#3c3249;
+  opacity:1;
+}
+.tt-knob-mark::after{ /* O */
+  width:10px; height:10px;
+  border:2.5px solid #3c3249;
+  border-radius:50%;
+  opacity:0;
+}
+html[data-theme="dark"] .tt-knob-mark::before{ opacity:0 }
+html[data-theme="dark"] .tt-knob-mark::after{
+  opacity:1;
+  border-color:#eae4f2;
+}
+
+/* موبایل: کمی کوچک‌تر */
+@media (max-width:640px){
+  .theme-switch{ width:48px; height:26px }
+  .tt-knob{ width:22px; height:22px; top:2px; left:2px }
+  html[data-theme="dark"] .tt-knob{ left:calc(100% - 24px) }
+  .tt-label-on{ left:7px }
+  .tt-label-off{ right:7px }
+  .tt-bar{ height:10px }
+  .tt-ring{ width:9px; height:9px }
+}
+
+/* ---------- home hero ---------- */
 .hero-split{
   display:grid;
   gap:26px;
@@ -478,12 +477,10 @@ html[dir="ltr"] body{font-family:"Shabnam",Arial,sans-serif}
     padding-block:20px;
   }
 
-  /* فارسی: متن سمت راست */
   .hero-text{
     text-align:right;
   }
 
-  /* انگلیسی: متن سمت چپ */
   html[dir="ltr"] .hero-text{
     text-align:left;
   }
@@ -517,186 +514,4 @@ html[dir="ltr"] body{font-family:"Shabnam",Arial,sans-serif}
     aspect-ratio:auto;
   }
 
-}
-
-/* ---------- rocker wall switch (day/night) ---------- */
-
-/* ✅ کلید به سمت راست منتقل شد */
-.tt-float{
-  position:fixed;
-  top:88px;
-  right:14px;
-  z-index:300;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:12px;
-}
-
-@media (min-width:900px){
-  .tt-float{
-    right:28px;   /* ✅ */
-    top:110px;
-  }
-}
-
-/* بدنهٔ کلید */
-.theme-switch{
-  position:relative;
-  width:56px;
-  height:118px;
-  border-radius:30px;
-  border:0;
-  padding:0;
-  cursor:pointer;
-  background:linear-gradient(180deg,#f8f7fb 0%,#e8e6ee 100%);
-  box-shadow:
-    inset 0 2px 4px rgba(255,255,255,.95),
-    inset 0 -3px 6px rgba(90,70,110,.16),
-    0 12px 26px rgba(80,60,110,.20),
-    0 0 0 1px rgba(255,255,255,.5);
-  transition:box-shadow .45s ease, background .45s ease;
-}
-
-html[data-theme="dark"] .theme-switch{
-  background:linear-gradient(180deg,#262130 0%,#171420 100%);
-  box-shadow:
-    inset 0 2px 4px rgba(255,255,255,.07),
-    inset 0 -3px 6px rgba(0,0,0,.55),
-    0 12px 28px rgba(0,0,0,.55),
-    0 0 28px rgba(255,79,216,.40),
-    0 0 0 1px rgba(255,255,255,.06);
-}
-
-/* علائم ثابت روی بدنه */
-.tt-label{
-  position:absolute;
-  left:0; right:0;
-  display:grid;
-  place-items:center;
-  pointer-events:none;
-}
-.tt-label-on{ top:13px }
-.tt-label-off{ bottom:13px }
-
-.tt-bar{
-  width:3px; height:16px;
-  border-radius:2px;
-  background:rgba(60,50,75,.5);
-}
-.tt-ring{
-  width:14px; height:14px;
-  border:3px solid rgba(60,50,75,.5);
-  border-radius:50%;
-}
-html[data-theme="dark"] .tt-bar{ background:rgba(232,226,240,.38) }
-html[data-theme="dark"] .tt-ring{ border-color:rgba(232,226,240,.38) }
-
-/* دکمهٔ متحرک */
-.tt-knob{
-  position:absolute;
-  left:4px;
-  top:4px;
-  width:48px;
-  height:52px;
-  border-radius:26px;
-  display:grid;
-  place-items:center;
-  background:linear-gradient(180deg,#fdfcff 0%,#eceaf2 100%);
-  box-shadow:
-    0 7px 16px rgba(80,60,110,.28),
-    inset 0 2px 3px rgba(255,255,255,.95);
-  transition:
-    top .45s cubic-bezier(.45,1.35,.5,1),
-    background .45s ease,
-    box-shadow .45s ease;
-  z-index:2;
-}
-
-html[data-theme="dark"] .tt-knob{
-  top:calc(100% - 56px);
-  background:linear-gradient(180deg,#37303f 0%,#231d2c 100%);
-  box-shadow:
-    0 7px 16px rgba(0,0,0,.5),
-    inset 0 2px 3px rgba(255,255,255,.09),
-    0 0 20px rgba(255,79,216,.30);
-}
-
-/* علامت روی دکمه: I در روز، O در شب */
-.tt-knob-mark{
-  position:relative;
-  width:16px; height:16px;
-  display:block;
-}
-.tt-knob-mark::before,
-.tt-knob-mark::after{
-  content:"";
-  position:absolute;
-  left:50%; top:50%;
-  translate:-50% -50%;
-  transition:opacity .35s ease;
-}
-.tt-knob-mark::before{ /* I */
-  width:3px; height:16px;
-  border-radius:2px;
-  background:#3c3249;
-  opacity:1;
-}
-.tt-knob-mark::after{ /* O */
-  width:13px; height:13px;
-  border:3px solid #3c3249;
-  border-radius:50%;
-  opacity:0;
-}
-html[data-theme="dark"] .tt-knob-mark::before{ opacity:0 }
-html[data-theme="dark"] .tt-knob-mark::after{
-  opacity:1;
-  border-color:#eae4f2;
-}
-
-/* نشانگر کوچک زیر کلید */
-.tt-badge{
-  width:30px; height:30px;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  font-size:14px;
-  background:radial-gradient(circle at 35% 30%, rgba(255,255,255,.95), rgba(228,223,238,.55));
-  box-shadow:
-    0 4px 12px rgba(80,60,110,.25),
-    0 0 14px rgba(144,67,213,.35);
-  transition:box-shadow .45s ease, background .45s ease;
-}
-html[data-theme="dark"] .tt-badge{
-  background:radial-gradient(circle at 35% 30%, #3a3145, #241f2e);
-  box-shadow:
-    0 4px 12px rgba(0,0,0,.45),
-    0 0 18px rgba(144,67,213,.55);
-}
-
-/* موبایل: جمع‌وجورتر — ✅ پایین-راست */
-@media (max-width:640px){
-  .tt-float{
-    top:auto;
-    bottom:16px;
-    right:10px;   /* ✅ */
-    gap:8px;
-  }
-  .theme-switch{
-    width:48px;
-    height:100px;
-    border-radius:26px;
-  }
-  .tt-knob{
-    width:40px;
-    height:44px;
-    left:4px;
-  }
-  html[data-theme="dark"] .tt-knob{
-    top:calc(100% - 48px);
-  }
-  .tt-badge{
-    width:26px; height:26px;
-    font-size:12px;
-  }
 }
