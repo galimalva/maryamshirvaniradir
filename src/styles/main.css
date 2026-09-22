@@ -64,6 +64,12 @@ p{margin:0 0 12px;color:var(--muted)}
 .main-nav a{padding:11px 14px;border-radius:12px;color:var(--muted)}
 .main-nav a:hover,.main-nav a.active{background:rgba(144,67,213,.12);color:var(--text)}
 .main-nav.open{display:flex}
+
+/* ✅ موبایل: دکمه منو سمت راست */
+@media (max-width:779px){
+  #menu-btn{order:-1}
+}
+
 @media (min-width:780px){
   .nav-row{min-height:62px}
   #menu-btn{display:none}
@@ -96,8 +102,8 @@ p{margin:0 0 12px;color:var(--muted)}
 .social-icon{width:58px;height:58px;border-radius:16px;border:1px solid var(--border);background:var(--card);display:grid;place-items:center;color:var(--purple);transition:.2s}
 .social-icon:hover{transform:translateY(-3px);color:#fff;background:var(--grad)}
 .social-icon svg{width:27px;height:27px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-/* ---------- stories ---------- */
 
+/* ---------- stories ---------- */
 .stories-grid{
   display:grid;
   gap:20px;
@@ -137,8 +143,8 @@ p{margin:0 0 12px;color:var(--muted)}
   margin-top:auto;
   align-self:flex-start;
 }
-/* ---------- story sizing fix ---------- */
 
+/* ---------- story sizing fix ---------- */
 .stories-grid{
   max-width:640px;
   margin-inline:auto;
@@ -151,8 +157,8 @@ p{margin:0 0 12px;color:var(--muted)}
   object-fit:cover;
   object-position:center 30%;
 }
-/* ---------- poems ---------- */
 
+/* ---------- poems ---------- */
 .poems-grid{
   display:grid;
   gap:20px;
@@ -186,8 +192,8 @@ p{margin:0 0 12px;color:var(--muted)}
   background:var(--border);
   margin:10px 0;
 }
-/* ---------- gallery ---------- */
 
+/* ---------- gallery ---------- */
 .gallery-page{
   display:grid;
   gap:28px;
@@ -223,8 +229,8 @@ p{margin:0 0 12px;color:var(--muted)}
   color:var(--text);
   text-align:center;
 }
-/* ---------- gallery fix + lightbox ---------- */
 
+/* ---------- gallery fix + lightbox ---------- */
 .gallery-item.tall img{
   aspect-ratio:3/4;
 }
@@ -281,8 +287,8 @@ p{margin:0 0 12px;color:var(--muted)}
 .gallery-item img{
   cursor:zoom-in;
 }
-/* ---------- day / night toggle ---------- */
 
+/* ---------- day / night toggle ---------- */
 .theme-toggle{
   position:relative;
   width:78px;
@@ -412,6 +418,7 @@ html[data-theme="dark"] .theme-toggle .orb{
   .theme-toggle .orb{width:26px;height:26px}
   html[data-theme="dark"] .theme-toggle .orb{left:calc(100% - 29px)}
 }
+
 /* ---------- lang button ---------- */
 .lang-btn{
   display:grid;place-items:center;
@@ -421,8 +428,8 @@ html[data-theme="dark"] .theme-toggle .orb{
 }
 .lang-btn:hover{background:rgba(144,67,213,.1)}
 html[dir="ltr"] body{font-family:"Shabnam",Arial,sans-serif}
-/* ---------- home hero: big portrait + text ---------- */
 
+/* ---------- home hero: big portrait + text ---------- */
 .hero-split{
   display:grid;
   gap:26px;
@@ -494,12 +501,14 @@ html[dir="ltr"] body{font-family:"Shabnam",Arial,sans-serif}
   }
 
 }
+
 /* ---------- rocker wall switch (day/night) ---------- */
 
+/* ✅ کلید به سمت راست منتقل شد */
 .tt-float{
   position:fixed;
   top:88px;
-  left:14px;
+  right:14px;
   z-index:300;
   display:flex;
   flex-direction:column;
@@ -509,7 +518,7 @@ html[dir="ltr"] body{font-family:"Shabnam",Arial,sans-serif}
 
 @media (min-width:900px){
   .tt-float{
-    left:28px;
+    right:28px;   /* ✅ */
     top:110px;
   }
 }
@@ -648,12 +657,12 @@ html[data-theme="dark"] .tt-badge{
     0 0 18px rgba(144,67,213,.55);
 }
 
-/* موبایل: جمع‌وجورتر و پایین-چپ تا با متن تداخل نکند */
+/* موبایل: جمع‌وجورتر — ✅ پایین-راست */
 @media (max-width:640px){
   .tt-float{
     top:auto;
     bottom:16px;
-    left:10px;
+    right:10px;   /* ✅ */
     gap:8px;
   }
   .theme-switch{
