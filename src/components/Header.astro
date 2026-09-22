@@ -34,7 +34,7 @@ const switchHref =
   <div class="container">
     <div class="nav-row">
 
-      <div style="width:78px" aria-hidden="true"></div>
+      <div class="nav-spacer" aria-hidden="true"></div>
 
       <nav class="main-nav" id="main-nav" aria-label={L.menu}>
         {items.map((it) => (
@@ -43,34 +43,26 @@ const switchHref =
       </nav>
 
       <div class="btn-group">
+
+        <button
+          id="theme-btn"
+          class="theme-switch"
+          type="button"
+          aria-label={L.theme}
+          aria-pressed="false"
+        >
+          <span class="tt-label tt-label-on" aria-hidden="true"><i class="tt-bar"></i></span>
+          <span class="tt-label tt-label-off" aria-hidden="true"><i class="tt-ring"></i></span>
+          <span class="tt-knob" aria-hidden="true"><i class="tt-knob-mark"></i></span>
+        </button>
+
         <a class="lang-btn" href={switchHref}>{otherLang === "en" ? "EN" : "فا"}</a>
-        <button id="menu-btn" class="icon-btn" aria-label={L.menu}>☰</button>
+
       </div>
 
     </div>
   </div>
 </header>
-
-
-<!-- کلید دیواری روز / شب -->
-<div class="tt-float">
-
-  <button
-    id="theme-btn"
-    class="theme-switch"
-    type="button"
-    aria-label={L.theme}
-    aria-pressed="false"
-  >
-    <span class="tt-label tt-label-on" aria-hidden="true"><i class="tt-bar"></i></span>
-    <span class="tt-label tt-label-off" aria-hidden="true"><i class="tt-ring"></i></span>
-    <span class="tt-knob" aria-hidden="true"><i class="tt-knob-mark"></i></span>
-  </button>
-
-  <span class="tt-badge" id="theme-badge" aria-hidden="true">☀️</span>
-
-</div>
-
 
 <script>
   const menuBtn = document.getElementById("menu-btn");
@@ -78,12 +70,10 @@ const switchHref =
   menuBtn?.addEventListener("click", () => nav?.classList.toggle("open"));
 
   const themeBtn = document.getElementById("theme-btn");
-  const badge = document.getElementById("theme-badge");
 
   const sync = () => {
     const dark = document.documentElement.dataset.theme === "dark";
     themeBtn?.setAttribute("aria-pressed", dark ? "true" : "false");
-    if (badge) badge.textContent = dark ? "🌙" : "☀️";
   };
 
   sync();
