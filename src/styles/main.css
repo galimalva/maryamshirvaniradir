@@ -60,14 +60,31 @@ p{margin:0 0 12px;color:var(--muted)}
 .brand span{color:var(--purple)}
 .icon-btn{width:44px;height:44px;border:1px solid var(--border);border-radius:12px;display:grid;place-items:center;font-size:18px}
 .btn-group{display:flex;gap:8px}
-.main-nav{display:none;flex-direction:column;gap:4px;padding:8px 0 16px}
 .main-nav a{padding:11px 14px;border-radius:12px;color:var(--muted)}
 .main-nav a:hover,.main-nav a.active{background:rgba(144,67,213,.12);color:var(--text)}
-.main-nav.open{display:flex}
 
-/* ✅ موبایل: دکمه منو سمت راست */
+/* ✅ موبایل: همه تب‌ها همیشه در هدر، مثل کامپیوتر — بدون دکمه منو */
 @media (max-width:779px){
-  #menu-btn{order:-1}
+  #menu-btn{display:none}
+  .nav-row{flex-wrap:wrap}
+  .main-nav{
+    display:flex!important;
+    flex-direction:row;
+    flex-wrap:nowrap;
+    width:100%;
+    order:3;
+    padding:2px 0 6px;
+    gap:2px;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .main-nav::-webkit-scrollbar{display:none}
+  .main-nav a{
+    font-size:13.5px;
+    padding:9px 12px;
+    white-space:nowrap;
+  }
 }
 
 @media (min-width:780px){
