@@ -2,6 +2,13 @@
   "name": "maryamshirvaniradir",
   "compatibility_date": "2025-01-01",
   "assets": {
-    "directory": "./dist"
+    "directory": "./dist",
+    "binding": "ASSETS"
+  },
+  "main": "./worker/index.js",
+  "vars": {
+    "SUPABASE_URL": "https://jjidyjbvsivalwepyeie.supabase.co",
+    "SUPABASE_PUBLISHABLE_KEY": "sb_publishable_e_DaPWZuuvEv6MNXAAaoyg_j8y2yD5o",
+    "ADMIN_EMAIL": "maryamshirvanirad@gmail.com"
   }
 }
