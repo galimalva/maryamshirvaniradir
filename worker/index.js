@@ -1,17 +1,26 @@
+import { handleLogin } from './api/login.js';
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    const path = url.pathname;
 
-    if (url.pathname.startsWith('/api/')) {
+    // مسیرهای API
+    if (path === '/api/login' && request.method === 'POST') {
+      return handleLogin(request, env);
+    }
+
+    if (path.startsWith('/api/')) {
       return new Response(JSON.stringify({ 
-        message: 'API is active',
-        endpoint: url.pathname,
-        supabase: env.SUPABASE_URL ? 'configured' : 'missing'
+        error: 'مسیر پیدا نشد',
+        path: path 
       }), {
+        status: 404,
         headers: { 'Content-Type': 'application/json' }
       });
     }
 
+    // فایل‌های استاتیک سایت
     return env.ASSETS.fetch(request);
   }
 };
