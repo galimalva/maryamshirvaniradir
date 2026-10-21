@@ -1,0 +1,466 @@
+---
+// صفحه داشبورد مدیریت
+---
+
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>پنل مدیریت - داشبورد</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #f3f4f6;
+      min-height: 100vh;
+    }
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .header h1 {
+      font-size: 24px;
+    }
+    .header-info {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .logout-btn {
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.3s;
+    }
+    .logout-btn:hover {
+      background: rgba(255,255,255,0.3);
+    }
+    .container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    .upload-card {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      margin-bottom: 30px;
+    }
+    .upload-card h2 {
+      color: #333;
+      margin-bottom: 20px;
+      font-size: 20px;
+    }
+    .upload-area {
+      border: 2px dashed #cbd5e1;
+      border-radius: 10px;
+      padding: 40px;
+      text-align: center;
+      transition: all 0.3s;
+      cursor: pointer;
+      background: #f8fafc;
+    }
+    .upload-area:hover {
+      border-color: #667eea;
+      background: #f1f5f9;
+    }
+    .upload-area.dragover {
+      border-color: #667eea;
+      background: #e0e7ff;
+    }
+    .upload-icon {
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+    .upload-text {
+      color: #64748b;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    .upload-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .file-input {
+      display: none;
+    }
+    .files-card {
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .files-card h2 {
+      color: #333;
+      margin-bottom: 20px;
+      font-size: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .refresh-btn {
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      color: #64748b;
+    }
+    .refresh-btn:hover {
+      background: #e2e8f0;
+    }
+    .file-list {
+      display: grid;
+      gap: 10px;
+    }
+    .file-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px;
+      background: #f8fafc;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      transition: all 0.2s;
+    }
+    .file-item:hover {
+      background: #f1f5f9;
+    }
+    .file-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      flex: 1;
+      min-width: 0;
+    }
+    .file-icon {
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+    .file-details {
+      flex: 1;
+      min-width: 0;
+    }
+    .file-name {
+      font-weight: 500;
+      color: #333;
+      margin-bottom: 4px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .file-meta {
+      font-size: 12px;
+      color: #94a3b8;
+    }
+    .file-actions {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .action-btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .download-btn {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+    .download-btn:hover {
+      background: #bfdbfe;
+    }
+    .delete-btn {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+    .delete-btn:hover {
+      background: #fecaca;
+    }
+    .empty {
+      text-align: center;
+      padding: 40px;
+      color: #94a3b8;
+    }
+    .empty-icon {
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+    .notification {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      padding: 15px 20px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      z-index: 1000;
+      display: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .notification.success {
+      background: #16a34a;
+    }
+    .notification.error {
+      background: #dc2626;
+    }
+    .loading {
+      text-align: center;
+      padding: 30px;
+      color: #94a3b8;
+    }
+    .upload-progress {
+      display: none;
+      margin-top: 15px;
+      padding: 10px;
+      background: #f1f5f9;
+      border-radius: 6px;
+      text-align: center;
+      color: #64748b;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>📊 پنل مدیریت</h1>
+    <div class="header-info">
+      <span>مدیر سیستم</span>
+      <button class="logout-btn" id="logoutBtn">خروج</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- کارت آپلود -->
+    <div class="upload-card">
+      <h2>📁 آپلود فایل</h2>
+      <div class="upload-area" id="uploadArea">
+        <div class="upload-icon">📤</div>
+        <div class="upload-text">فایل خود را اینجا رها کنید یا کلیک کنید</div>
+        <button class="upload-btn">انتخاب فایل</button>
+        <input type="file" class="file-input" id="fileInput" multiple />
+      </div>
+      <div class="upload-progress" id="uploadProgress">
+        ⏳ در حال آپلود...
+      </div>
+    </div>
+
+    <!-- کارت لیست فایل‌ها -->
+    <div class="files-card">
+      <h2>
+        <span>📂 فایل‌های آپلود شده</span>
+        <button class="refresh-btn" id="refreshBtn">🔄 بروزرسانی</button>
+      </h2>
+      <div id="fileList">
+        <div class="loading">⏳ در حال بارگذاری...</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="notification" id="notification"></div>
+
+  <script>
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('fileInput');
+    const fileList = document.getElementById('fileList');
+    const refreshBtn = document.getElementById('refreshBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const uploadProgress = document.getElementById('uploadProgress');
+    const notification = document.getElementById('notification');
+
+    // نمایش نوتیفیکیشن
+    function showNotification(message, type = 'success') {
+      notification.textContent = message;
+      notification.className = `notification ${type}`;
+      notification.style.display = 'block';
+      setTimeout(() => {
+        notification.style.display = 'none';
+      }, 3000);
+    }
+
+    // آپلود فایل
+    async function uploadFile(file) {
+      uploadProgress.style.display = 'block';
+      const formData = new FormData();
+      formData.append('file', file);
+
+      try {
+        const res = await fetch('/api/upload', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          showNotification(`✅ فایل ${file.name} آپلود شد`, 'success');
+          loadFiles();
+        } else {
+          showNotification(`❌ ${data.error}`, 'error');
+        }
+      } catch (err) {
+        showNotification('❌ خطای شبکه', 'error');
+      } finally {
+        uploadProgress.style.display = 'none';
+      }
+    }
+
+    // کلیک روی ناحیه آپلود
+    uploadArea.addEventListener('click', () => {
+      fileInput.click();
+    });
+
+    // انتخاب فایل
+    fileInput.addEventListener('change', (e) => {
+      Array.from(e.target.files).forEach(uploadFile);
+      fileInput.value = '';
+    });
+
+    // درگ اند دراپ
+    uploadArea.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadArea.classList.add('dragover');
+    });
+    uploadArea.addEventListener('dragleave', () => {
+      uploadArea.classList.remove('dragover');
+    });
+    uploadArea.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadArea.classList.remove('dragover');
+      Array.from(e.dataTransfer.files).forEach(uploadFile);
+    });
+
+    // گرفتن آیکون فایل
+    function getFileIcon(filename) {
+      const ext = filename.split('.').pop().toLowerCase();
+      if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'].includes(ext)) return '🖼️';
+      if (['mp4', 'avi', 'mov', 'webm'].includes(ext)) return '🎬';
+      if (['mp3', 'wav', 'ogg'].includes(ext)) return '🎵';
+      if (['pdf'].includes(ext)) return '📄';
+      if (['doc', 'docx'].includes(ext)) return '📝';
+      if (['xls', 'xlsx'].includes(ext)) return '📊';
+      if (['zip', 'rar', '7z'].includes(ext)) return '🗜️';
+      return '📎';
+    }
+
+    // فرمت حجم فایل
+    function formatSize(bytes) {
+      if (bytes === 0) return '0 B';
+      const k = 1024;
+      const sizes = ['B', 'KB', 'MB', 'GB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+
+    // فرمت تاریخ
+    function formatDate(dateStr) {
+      if (!dateStr) return '';
+      const date = new Date(dateStr);
+      return date.toLocaleDateString('fa-IR', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+
+    // بارگذاری لیست فایل‌ها
+    async function loadFiles() {
+      fileList.innerHTML = '<div class="loading">⏳ در حال بارگذاری...</div>';
+      try {
+        const res = await fetch('/api/list');
+        const data = await res.json();
+
+        if (data.success && data.files.length > 0) {
+          fileList.innerHTML = data.files.map(file => `
+            <div class="file-item">
+              <div class="file-info">
+                <div class="file-icon">${getFileIcon(file.name)}</div>
+                <div class="file-details">
+                  <div class="file-name">${file.name}</div>
+                  <div class="file-meta">${formatSize(file.size)} • ${formatDate(file.created)}</div>
+                </div>
+              </div>
+              <div class="file-actions">
+                <button class="action-btn download-btn" onclick="downloadFile('${file.url}')">دانلود</button>
+                <button class="action-btn delete-btn" onclick="deleteFile('uploads/${file.name}', '${file.name}')">حذف</button>
+              </div>
+            </div>
+          `).join('');
+        } else if (data.success && data.files.length === 0) {
+          fileList.innerHTML = `
+            <div class="empty">
+              <div class="empty-icon">📭</div>
+              <div>هنوز فایلی آپلود نشده</div>
+            </div>
+          `;
+        } else {
+          fileList.innerHTML = `<div class="empty">❌ ${data.error || 'خطا در بارگذاری'}</div>`;
+        }
+      } catch (err) {
+        fileList.innerHTML = '<div class="empty">❌ خطای شبکه</div>';
+      }
+    }
+
+    // دانلود فایل
+    window.downloadFile = (url) => {
+      window.open(url, '_blank');
+    };
+
+    // حذف فایل
+    window.deleteFile = async (path, name) => {
+      if (!confirm(`آیا از حذف فایل "${name}" مطمئن هستید؟`)) return;
+
+      try {
+        const res = await fetch('/api/delete', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ path })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          showNotification(`✅ فایل حذف شد`, 'success');
+          loadFiles();
+        } else {
+          showNotification(`❌ ${data.error}`, 'error');
+        }
+      } catch (err) {
+        showNotification('❌ خطای شبکه', 'error');
+      }
+    };
+
+    // بروزرسانی
+    refreshBtn.addEventListener('click', loadFiles);
+
+    // خروج
+    logoutBtn.addEventListener('click', async () => {
+      await fetch('/api/logout', { method: 'POST' });
+      window.location.href = '/admin/login';
+    });
+
+    // بارگذاری اولیه
+    loadFiles();
+  </script>
+</body>
+</html>
