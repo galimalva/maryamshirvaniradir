@@ -18,7 +18,8 @@ import poems from "../data/poems.js";
         {
           stories.map((s) => (
             <article class="card story-card">
-              {s.image && <img src={s.image} alt={s.title} class="story-img" />}
+              {s.image && <img src={s.image} alt={s.title} class="story-img" />
+              }
               <span class="pill">{s.type}</span>
               <h3>{s.title}</h3>
               <p class="story-excerpt">{s.excerpt}</p>
@@ -41,7 +42,7 @@ import poems from "../data/poems.js";
       <div class="poems-grid">
         {
           poems.map((p) => (
-            <article class="card poem-card">
+            <article class="poem-card">
               <div class="year-row">
                 <span class="poem-meta">{p.date}</span>
                 <span class="pill">شعر</span>
@@ -90,6 +91,7 @@ import poems from "../data/poems.js";
       if (data.stories && data.stories.length > 0) {
         grid.innerHTML = data.stories.map(s => `
           <article class="card story-card">
+            ${s.image_url ? `<img src="${s.image_url}" alt="${escapeHtml(s.title)}" style="width:100%;max-height:250px;object-fit:cover;border-radius:8px;margin-bottom:15px" />` : ''}
             <span class="pill">${escapeHtml(s.category) || 'داستان'}</span>
             <h3>${escapeHtml(s.title)}</h3>
             <p class="story-excerpt">${escapeHtml(s.content.substring(0, 200))}${s.content.length > 200 ? '...' : ''}</p>
@@ -98,7 +100,14 @@ import poems from "../data/poems.js";
       } else {
         grid.innerHTML = '';
       }
-    } catch (e) {
+    } (catch (e) {
+      document.getElementById('newStoriesGrid').innerHTML = '';
+    }
+  }
+
+  async function loadNewPoems() {
+    try {
+      const catch (e) {
       document.getElementById('newStoriesGrid').innerHTML = '';
     }
   }
@@ -114,10 +123,12 @@ import poems from "../data/poems.js";
           <article class="card poem-card">
             <div class="year-row">
               <span class="poem-meta">${formatDate(p.created_at)}</span>
+              <span class="poem-meta">${escapeHtml(p.author)}</span>
               <span class="pill">${escapeHtml(p.category) || 'شعر'}</span>
             </div>
             <h3>${escapeHtml(p.title)}</h3>
             <div class="poem-divider"></div>
+            ${p.image_url ? `<img src="${p.image_url}" alt="${escapeHtml(p.title)}" style="width:100%;max-height:300px;object-fit:cover;border-radius:8px;margin:10px 0" />` : ''}
             <p class="poem-text">${escapeHtml(p.content)}</p>
           </article>
         `).join('');
