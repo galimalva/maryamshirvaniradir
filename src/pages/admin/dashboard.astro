@@ -9,205 +9,56 @@
   <title>پنل مدیریت</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: system-ui, -apple-system, Tahoma, sans-serif;
-      background: #f3f4f6;
-      min-height: 100vh;
-    }
-    .header {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 15px 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
+    body { font-family: system-ui, -apple-system, Tahoma, sans-serif; background: #f3f4f6; min-height: 100vh; }
+    .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
     .header h1 { font-size: 20px; }
     .header-info { display: flex; align-items: center; gap: 15px; font-size: 14px; }
-    .logout-btn {
-      background: rgba(255,255,255,0.2);
-      color: white;
-      border: 1px solid rgba(255,255,255,0.3);
-      padding: 6px 14px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 13px;
-    }
+    .logout-btn { background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.3); padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 13px; }
     .logout-btn:hover { background: rgba(255,255,255,0.3); }
-
-    .tabs {
-      background: white;
-      padding: 0 20px;
-      display: flex;
-      gap: 5px;
-      border-bottom: 1px solid #e5e7eb;
-      overflow-x: auto;
-    }
-    .tab {
-      padding: 15px 20px;
-      cursor: pointer;
-      border: none;
-      background: none;
-      font-size: 14px;
-      color: #6b7280;
-      border-bottom: 3px solid transparent;
-      white-space: nowrap;
-      transition: all 0.2s;
-    }
+    .tabs { background: white; padding: 0 20px; display: flex; gap: 5px; border-bottom: 1px solid #e5e7eb; overflow-x: auto; }
+    .tab { padding: 15px 20px; cursor: pointer; border: none; background: none; font-size: 14px; color: #6b7280; border-bottom: 3px solid transparent; white-space: nowrap; transition: all 0.2s; }
     .tab:hover { color: #667eea; }
-    .tab.active {
-      color: #667eea;
-      border-bottom-color: #667eea;
-      font-weight: 600;
-    }
-
+    .tab.active { color: #667eea; border-bottom-color: #667eea; font-weight: 600; }
     .container { max-width: 1200px; margin: 20px auto; padding: 0 20px; }
-
     .panel { display: none; }
     .panel.active { display: block; }
-
-    .card {
-      background: white;
-      border-radius: 10px;
-      padding: 25px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-      margin-bottom: 20px;
-    }
+    .card { background: white; border-radius: 10px; padding: 25px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); margin-bottom: 20px; }
     .card h2 { color: #333; margin-bottom: 20px; font-size: 18px; }
-
     .form-group { margin-bottom: 15px; }
-    .form-group label {
-      display: block;
-      margin-bottom: 6px;
-      color: #4b5563;
-      font-size: 14px;
-      font-weight: 500;
-    }
-    input[type="text"], input[type="number"], textarea, select {
-      width: 100%;
-      padding: 10px 12px;
-      border: 1px solid #d1d5db;
-      border-radius: 6px;
-      font-size: 14px;
-      font-family: inherit;
-      transition: border 0.2s;
-    }
-    input:focus, textarea:focus, select:focus {
-      outline: none;
-      border-color: #667eea;
-    }
+    .form-group label { display: block; margin-bottom: 6px; color: #4b5563; font-size: 14px; font-weight: 500; }
+    input[type="text"], input[type="number"], textarea, select { width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; font-family: inherit; transition: border 0.2s; }
+    input:focus, textarea:focus, select:focus { outline: none; border-color: #667eea; }
     textarea { resize: vertical; min-height: 100px; }
     textarea.large { min-height: 200px; }
-
-    .btn {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 500;
-      transition: all 0.2s;
-    }
-    .btn-primary {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-    }
+    .btn { padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500; transition: all 0.2s; }
+    .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
     .btn-primary:hover { transform: translateY(-1px); }
-    .btn-secondary {
-      background: #e5e7eb;
-      color: #4b5563;
-    }
     .btn-danger { background: #fee2e2; color: #991b1b; }
     .btn-danger:hover { background: #fecaca; }
     .btn-small { padding: 5px 10px; font-size: 12px; }
-
     .checkbox-group { display: flex; align-items: center; gap: 8px; }
     .checkbox-group input { width: auto; }
-
-    .list-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: start;
-      padding: 15px;
-      background: #f9fafb;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      border: 1px solid #e5e7eb;
-    }
+    .list-item { display: flex; justify-content: space-between; align-items: start; padding: 15px; background: #f9fafb; border-radius: 8px; margin-bottom: 10px; border: 1px solid #e5e7eb; }
     .list-item-content { flex: 1; min-width: 0; }
     .list-item-title { font-weight: 600; color: #333; margin-bottom: 5px; }
     .list-item-meta { font-size: 12px; color: #9ca3af; }
     .list-item-text { color: #4b5563; font-size: 14px; margin-top: 5px; white-space: pre-wrap; }
     .list-item-actions { display: flex; gap: 5px; flex-shrink: 0; margin-right: 10px; }
-
-    .empty {
-      text-align: center;
-      padding: 30px;
-      color: #9ca3af;
-    }
-
-    .notification {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      padding: 12px 20px;
-      border-radius: 8px;
-      color: white;
-      font-weight: 500;
-      z-index: 1000;
-      display: none;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
+    .empty { text-align: center; padding: 30px; color: #9ca3af; }
+    .notification { position: fixed; top: 20px; left: 20px; padding: 12px 20px; border-radius: 8px; color: white; font-weight: 500; z-index: 1000; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
     .notification.success { background: #16a34a; }
     .notification.error { background: #dc2626; }
-
-    .image-preview {
-      max-width: 200px;
-      max-height: 200px;
-      border-radius: 6px;
-      margin-top: 10px;
-      display: none;
-    }
-
-    .upload-btn {
-      display: inline-block;
-      padding: 8px 16px;
-      background: #e0e7ff;
-      color: #4338ca;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 500;
-      margin-top: 5px;
-    }
-    .upload-btn:hover { background: #c7d2fe; }
-
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 15px;
-    }
-    .gallery-item {
-      background: white;
-      border-radius: 8px;
-      overflow: hidden;
-      border: 1px solid #e5e7eb;
-    }
+    .image-preview { max-width: 200px; max-height: 200px; border-radius: 6px; margin-top: 10px; display: none; }
+    .upload-btn { display: inline-block; padding: 8px 16px; background: #e0e7ff; color: #4338ca; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 500; margin-top: 5px; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
+    .gallery-item { background: white; border-radius: 8px; overflow: hidden; border: 1px solid #e5e7eb; }
     .gallery-item img { width: 100%; height: 150px; object-fit: cover; }
     .gallery-item-info { padding: 10px; }
     .gallery-item-title { font-weight: 600; font-size: 13px; margin-bottom: 5px; }
-    .gallery-item-actions { margin-top: 8px; }
-
     .book-item { display: flex; gap: 15px; }
     .book-item img { width: 80px; height: 120px; object-fit: cover; border-radius: 4px; }
-
     .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
     @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
-
     .loading { text-align: center; padding: 30px; color: #9ca3af; }
   </style>
 </head>
@@ -230,7 +81,6 @@
   </div>
 
   <div class="container">
-    <!-- ==================== درباره من ==================== -->
     <div class="panel active" id="panel-about">
       <div class="card">
         <h2>👤 درباره من</h2>
@@ -242,7 +92,6 @@
       </div>
     </div>
 
-    <!-- ==================== شعرها ==================== -->
     <div class="panel" id="panel-poems">
       <div class="card">
         <h2>✍️ افزودن شعر جدید</h2>
@@ -282,7 +131,6 @@
       </div>
     </div>
 
-    <!-- ==================== داستان‌ها ==================== -->
     <div class="panel" id="panel-stories">
       <div class="card">
         <h2>📖 افزودن داستان جدید</h2>
@@ -315,7 +163,6 @@
       </div>
     </div>
 
-    <!-- ==================== دلنوشته‌ها ==================== -->
     <div class="panel" id="panel-notes">
       <div class="card">
         <h2>💭 افزودن دلنوشته</h2>
@@ -335,7 +182,6 @@
       </div>
     </div>
 
-    <!-- ==================== کتاب‌ها ==================== -->
     <div class="panel" id="panel-books">
       <div class="card">
         <h2>📚 معرفی کتاب جدید</h2>
@@ -374,7 +220,6 @@
       </div>
     </div>
 
-    <!-- ==================== گالری ==================== -->
     <div class="panel" id="panel-gallery">
       <div class="card">
         <h2>🖼️ افزودن عکس به گالری</h2>
@@ -408,17 +253,15 @@
 
   <div class="notification" id="notification"></div>
 
-  <script>
-    // ===== نوتیفیکیشن =====
+  <script is:inline>
     function showNotification(message, type = 'success') {
       const n = document.getElementById('notification');
       n.textContent = message;
-      n.className = `notification ${type}`;
+      n.className = 'notification ' + type;
       n.style.display = 'block';
       setTimeout(() => { n.style.display = 'none'; }, 3000);
     }
 
-    // ===== تب‌ها =====
     document.querySelectorAll('.tab').forEach(tab => {
       tab.addEventListener('click', () => {
         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -428,15 +271,12 @@
       });
     });
 
-    // ===== آپلود عکس =====
     async function uploadImage(inputId, urlFieldId, previewId) {
       const input = document.getElementById(inputId);
       const file = input.files[0];
       if (!file) return;
-
       const formData = new FormData();
       formData.append('file', file);
-
       try {
         const res = await fetch('/api/admin/upload-image', { method: 'POST', body: formData });
         const data = await res.json();
@@ -449,12 +289,9 @@
         } else {
           showNotification('❌ ' + data.error, 'error');
         }
-      } catch (e) {
-        showNotification('❌ خطای شبکه', 'error');
-      }
+      } catch (e) { showNotification('❌ خطای شبکه', 'error'); }
     }
 
-    // ===== درباره من =====
     async function loadAbout() {
       try {
         const res = await fetch('/api/admin/about');
@@ -467,9 +304,7 @@
       const content = document.getElementById('aboutContent').value;
       try {
         const res = await fetch('/api/admin/about/update', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ content })
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ content })
         });
         const data = await res.json();
         if (data.about) showNotification('✅ ذخیره شد');
@@ -477,7 +312,6 @@
       } catch (e) { showNotification('❌ خطای شبکه', 'error'); }
     }
 
-    // ===== شعرها =====
     async function loadPoems() {
       try {
         const res = await fetch('/api/admin/poems');
@@ -496,9 +330,7 @@
               </div>
             </div>
           `).join('');
-        } else {
-          list.innerHTML = '<div class="empty">📭 هنوز شعری ثبت نشده</div>';
-        }
+        } else { list.innerHTML = '<div class="empty">📭 هنوز شعری ثبت نشده</div>'; }
       } catch (e) {}
     }
 
@@ -538,7 +370,6 @@
       } catch (e) {}
     }
 
-    // ===== داستان‌ها =====
     async function loadStories() {
       try {
         const res = await fetch('/api/admin/stories');
@@ -557,9 +388,7 @@
               </div>
             </div>
           `).join('');
-        } else {
-          list.innerHTML = '<div class="empty">📭 هنوز داستانی ثبت نشده</div>';
-        }
+        } else { list.innerHTML = '<div class="empty">📭 هنوز داستانی ثبت نشده</div>'; }
       } catch (e) {}
     }
 
@@ -598,7 +427,6 @@
       } catch (e) {}
     }
 
-    // ===== دلنوشته‌ها =====
     async function loadNotes() {
       try {
         const res = await fetch('/api/admin/notes');
@@ -616,18 +444,14 @@
               </div>
             </div>
           `).join('');
-        } else {
-          list.innerHTML = '<div class="empty">📭 هنوز دلنوشته‌ای ثبت نشده</div>';
-        }
+        } else { list.innerHTML = '<div class="empty">📭 هنوز دلنوشته‌ای ثبت نشده</div>'; }
       } catch (e) {}
     }
 
     async function createNote() {
       const content = document.getElementById('noteContent').value.trim();
       if (!content) { showNotification('❌ متن لازم است', 'error'); return; }
-      const body = {
-        content, is_published: document.getElementById('notePublished').checked
-      };
+      const body = { content, is_published: document.getElementById('notePublished').checked };
       try {
         const res = await fetch('/api/admin/notes/create', {
           method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body)
@@ -653,7 +477,6 @@
       } catch (e) {}
     }
 
-    // ===== کتاب‌ها =====
     async function loadBooks() {
       try {
         const res = await fetch('/api/admin/books');
@@ -675,9 +498,7 @@
               </div>
             </div>
           `).join('');
-        } else {
-          list.innerHTML = '<div class="empty">📭 هنوز کتابی ثبت نشده</div>';
-        }
+        } else { list.innerHTML = '<div class="empty">📭 هنوز کتابی ثبت نشده</div>'; }
       } catch (e) {}
     }
 
@@ -722,7 +543,6 @@
       } catch (e) {}
     }
 
-    // ===== گالری =====
     async function loadGallery() {
       try {
         const res = await fetch('/api/admin/gallery');
@@ -741,9 +561,7 @@
               </div>
             </div>
           `).join('');
-        } else {
-          list.innerHTML = '<div class="empty">📭 هنوز عکسی ثبت نشده</div>';
-        }
+        } else { list.innerHTML = '<div class="empty">📭 هنوز عکسی ثبت نشده</div>'; }
       } catch (e) {}
     }
 
@@ -784,13 +602,11 @@
       } catch (e) {}
     }
 
-    // ===== خروج =====
     document.getElementById('logoutBtn').addEventListener('click', async () => {
       await fetch('/api/logout', { method: 'POST' });
       window.location.href = '/admin/login';
     });
 
-    // ===== بارگذاری اولیه =====
     loadAbout();
     loadPoems();
     loadStories();
