@@ -19,13 +19,14 @@ export async function handleCreatePoem(request, env) {
   try {
     const supabase = getClient(env);
     const body = await request.json();
-    const { title, content, category, author, is_published } = body;
+    const { title, content, category, author, is_published, image_url } = body;
     if (!title || !content) return jsonError('عنوان و متن شعر لازم است');
     const { data, error } = await supabase.from('poems').insert([{
       title, content,
       category: category || 'عمومی',
       author: author || 'مریم شروانی راد',
-      is_published: is_published !== false
+      is_published: is_published !== false,
+      image_url: image_url || null
     }]).select();
     if (error) return jsonError(error.message);
     return jsonOk({ poem: data[0] });
