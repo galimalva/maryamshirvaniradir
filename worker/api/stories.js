@@ -18,12 +18,13 @@ export async function handleListStories(request, env, isAdmin = false) {
 export async function handleCreateStory(request, env) {
   try {
     const supabase = getClient(env);
-    const { title, content, category, is_published } = await request.json();
+    const { title, content, category, is_published, image_url } = await request.json();
     if (!title || !content) return jsonError('عنوان و متن داستان لازم است');
     const { data, error } = await supabase.from('stories').insert([{
       title, content,
       category: category || 'عمومی',
-      is_published: is_published !== false
+      is_published: is_published !== false,
+      image_url: image_url || null
     }]).select();
     if (error) return jsonError(error.message);
     return jsonOk({ story: data[0] });
