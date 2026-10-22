@@ -1,217 +1,160 @@
 ---
-// صفحه داشبورد مدیریت
+// پنل مدیریت - داشبورد کامل
 ---
 
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>پنل مدیریت - داشبورد</title>
+  <title>پنل مدیریت</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: system-ui, -apple-system, sans-serif;
+      font-family: system-ui, -apple-system, Tahoma, sans-serif;
       background: #f3f4f6;
       min-height: 100vh;
     }
     .header {
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
-      padding: 20px 40px;
+      padding: 15px 30px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
-    .header h1 {
-      font-size: 24px;
-    }
-    .header-info {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
+    .header h1 { font-size: 20px; }
+    .header-info { display: flex; align-items: center; gap: 15px; font-size: 14px; }
     .logout-btn {
       background: rgba(255,255,255,0.2);
       color: white;
       border: 1px solid rgba(255,255,255,0.3);
-      padding: 8px 16px;
+      padding: 6px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    .logout-btn:hover { background: rgba(255,255,255,0.3); }
+
+    .tabs {
+      background: white;
+      padding: 0 20px;
+      display: flex;
+      gap: 5px;
+      border-bottom: 1px solid #e5e7eb;
+      overflow-x: auto;
+    }
+    .tab {
+      padding: 15px 20px;
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-size: 14px;
+      color: #6b7280;
+      border-bottom: 3px solid transparent;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .tab:hover { color: #667eea; }
+    .tab.active {
+      color: #667eea;
+      border-bottom-color: #667eea;
+      font-weight: 600;
+    }
+
+    .container { max-width: 1200px; margin: 20px auto; padding: 0 20px; }
+
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 25px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
+    }
+    .card h2 { color: #333; margin-bottom: 20px; font-size: 18px; }
+
+    .form-group { margin-bottom: 15px; }
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      color: #4b5563;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    input[type="text"], input[type="number"], textarea, select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: inherit;
+      transition: border 0.2s;
+    }
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+    textarea { resize: vertical; min-height: 100px; }
+    textarea.large { min-height: 200px; }
+
+    .btn {
+      padding: 10px 20px;
+      border: none;
       border-radius: 6px;
       cursor: pointer;
       font-size: 14px;
-      transition: background 0.3s;
+      font-weight: 500;
+      transition: all 0.2s;
     }
-    .logout-btn:hover {
-      background: rgba(255,255,255,0.3);
-    }
-    .container {
-      max-width: 1200px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
-    .upload-card {
-      background: white;
-      border-radius: 12px;
-      padding: 30px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-      margin-bottom: 30px;
-    }
-    .upload-card h2 {
-      color: #333;
-      margin-bottom: 20px;
-      font-size: 20px;
-    }
-    .upload-area {
-      border: 2px dashed #cbd5e1;
-      border-radius: 10px;
-      padding: 40px;
-      text-align: center;
-      transition: all 0.3s;
-      cursor: pointer;
-      background: #f8fafc;
-    }
-    .upload-area:hover {
-      border-color: #667eea;
-      background: #f1f5f9;
-    }
-    .upload-area.dragover {
-      border-color: #667eea;
-      background: #e0e7ff;
-    }
-    .upload-icon {
-      font-size: 48px;
-      margin-bottom: 10px;
-    }
-    .upload-text {
-      color: #64748b;
-      font-size: 16px;
-      margin-bottom: 10px;
-    }
-    .upload-btn {
+    .btn-primary {
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
-      border: none;
-      padding: 10px 24px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 500;
     }
-    .file-input {
-      display: none;
+    .btn-primary:hover { transform: translateY(-1px); }
+    .btn-secondary {
+      background: #e5e7eb;
+      color: #4b5563;
     }
-    .files-card {
-      background: white;
-      border-radius: 12px;
-      padding: 30px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    }
-    .files-card h2 {
-      color: #333;
-      margin-bottom: 20px;
-      font-size: 20px;
+    .btn-danger { background: #fee2e2; color: #991b1b; }
+    .btn-danger:hover { background: #fecaca; }
+    .btn-small { padding: 5px 10px; font-size: 12px; }
+
+    .checkbox-group { display: flex; align-items: center; gap: 8px; }
+    .checkbox-group input { width: auto; }
+
+    .list-item {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-    }
-    .refresh-btn {
-      background: #f1f5f9;
-      border: 1px solid #e2e8f0;
-      padding: 6px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 13px;
-      color: #64748b;
-    }
-    .refresh-btn:hover {
-      background: #e2e8f0;
-    }
-    .file-list {
-      display: grid;
-      gap: 10px;
-    }
-    .file-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      align-items: start;
       padding: 15px;
-      background: #f8fafc;
+      background: #f9fafb;
       border-radius: 8px;
-      border: 1px solid #e2e8f0;
-      transition: all 0.2s;
+      margin-bottom: 10px;
+      border: 1px solid #e5e7eb;
     }
-    .file-item:hover {
-      background: #f1f5f9;
-    }
-    .file-info {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      flex: 1;
-      min-width: 0;
-    }
-    .file-icon {
-      font-size: 24px;
-      flex-shrink: 0;
-    }
-    .file-details {
-      flex: 1;
-      min-width: 0;
-    }
-    .file-name {
-      font-weight: 500;
-      color: #333;
-      margin-bottom: 4px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .file-meta {
-      font-size: 12px;
-      color: #94a3b8;
-    }
-    .file-actions {
-      display: flex;
-      gap: 8px;
-      flex-shrink: 0;
-    }
-    .action-btn {
-      padding: 6px 12px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 500;
-      transition: all 0.2s;
-    }
-    .download-btn {
-      background: #dbeafe;
-      color: #1e40af;
-    }
-    .download-btn:hover {
-      background: #bfdbfe;
-    }
-    .delete-btn {
-      background: #fee2e2;
-      color: #991b1b;
-    }
-    .delete-btn:hover {
-      background: #fecaca;
-    }
+    .list-item-content { flex: 1; min-width: 0; }
+    .list-item-title { font-weight: 600; color: #333; margin-bottom: 5px; }
+    .list-item-meta { font-size: 12px; color: #9ca3af; }
+    .list-item-text { color: #4b5563; font-size: 14px; margin-top: 5px; white-space: pre-wrap; }
+    .list-item-actions { display: flex; gap: 5px; flex-shrink: 0; margin-right: 10px; }
+
     .empty {
       text-align: center;
-      padding: 40px;
-      color: #94a3b8;
+      padding: 30px;
+      color: #9ca3af;
     }
-    .empty-icon {
-      font-size: 48px;
-      margin-bottom: 10px;
-    }
+
     .notification {
       position: fixed;
       top: 20px;
       left: 20px;
-      padding: 15px 20px;
+      padding: 12px 20px;
       border-radius: 8px;
       color: white;
       font-weight: 500;
@@ -219,26 +162,53 @@
       display: none;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
-    .notification.success {
-      background: #16a34a;
-    }
-    .notification.error {
-      background: #dc2626;
-    }
-    .loading {
-      text-align: center;
-      padding: 30px;
-      color: #94a3b8;
-    }
-    .upload-progress {
-      display: none;
-      margin-top: 15px;
-      padding: 10px;
-      background: #f1f5f9;
+    .notification.success { background: #16a34a; }
+    .notification.error { background: #dc2626; }
+
+    .image-preview {
+      max-width: 200px;
+      max-height: 200px;
       border-radius: 6px;
-      text-align: center;
-      color: #64748b;
+      margin-top: 10px;
+      display: none;
     }
+
+    .upload-btn {
+      display: inline-block;
+      padding: 8px 16px;
+      background: #e0e7ff;
+      color: #4338ca;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      margin-top: 5px;
+    }
+    .upload-btn:hover { background: #c7d2fe; }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+    }
+    .gallery-item {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #e5e7eb;
+    }
+    .gallery-item img { width: 100%; height: 150px; object-fit: cover; }
+    .gallery-item-info { padding: 10px; }
+    .gallery-item-title { font-weight: 600; font-size: 13px; margin-bottom: 5px; }
+    .gallery-item-actions { margin-top: 8px; }
+
+    .book-item { display: flex; gap: 15px; }
+    .book-item img { width: 80px; height: 120px; object-fit: cover; border-radius: 4px; }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
+
+    .loading { text-align: center; padding: 30px; color: #9ca3af; }
   </style>
 </head>
 <body>
@@ -250,29 +220,188 @@
     </div>
   </div>
 
+  <div class="tabs">
+    <button class="tab active" data-tab="about">👤 درباره من</button>
+    <button class="tab" data-tab="poems">✍️ شعرها</button>
+    <button class="tab" data-tab="stories">📖 داستان‌ها</button>
+    <button class="tab" data-tab="notes">💭 دلنوشته‌ها</button>
+    <button class="tab" data-tab="books">📚 کتاب‌ها</button>
+    <button class="tab" data-tab="gallery">🖼️ گالری</button>
+  </div>
+
   <div class="container">
-    <!-- کارت آپلود -->
-    <div class="upload-card">
-      <h2>📁 آپلود فایل</h2>
-      <div class="upload-area" id="uploadArea">
-        <div class="upload-icon">📤</div>
-        <div class="upload-text">فایل خود را اینجا رها کنید یا کلیک کنید</div>
-        <button class="upload-btn">انتخاب فایل</button>
-        <input type="file" class="file-input" id="fileInput" multiple />
-      </div>
-      <div class="upload-progress" id="uploadProgress">
-        ⏳ در حال آپلود...
+    <!-- ==================== درباره من ==================== -->
+    <div class="panel active" id="panel-about">
+      <div class="card">
+        <h2>👤 درباره من</h2>
+        <div class="form-group">
+          <label>متن معرفی:</label>
+          <textarea id="aboutContent" class="large" placeholder="متن معرفی خود را بنویسید..."></textarea>
+        </div>
+        <button class="btn btn-primary" onclick="saveAbout()">💾 ذخیره</button>
       </div>
     </div>
 
-    <!-- کارت لیست فایل‌ها -->
-    <div class="files-card">
-      <h2>
-        <span>📂 فایل‌های آپلود شده</span>
-        <button class="refresh-btn" id="refreshBtn">🔄 بروزرسانی</button>
-      </h2>
-      <div id="fileList">
-        <div class="loading">⏳ در حال بارگذاری...</div>
+    <!-- ==================== شعرها ==================== -->
+    <div class="panel" id="panel-poems">
+      <div class="card">
+        <h2>✍️ افزودن شعر جدید</h2>
+        <div class="form-group">
+          <label>عنوان شعر:</label>
+          <input type="text" id="poemTitle" placeholder="عنوان شعر" />
+        </div>
+        <div class="form-group">
+          <label>متن شعر:</label>
+          <textarea id="poemContent" class="large" placeholder="متن شعر..."></textarea>
+        </div>
+        <div class="two-col">
+          <div class="form-group">
+            <label>دسته‌بندی:</label>
+            <select id="poemCategory">
+              <option value="عاشقانه">عاشقانه</option>
+              <option value="غمگین">غمگین</option>
+              <option value="طنز">طنز</option>
+              <option value="معمولی">معمولی</option>
+              <option value="عمومی">عمومی</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>نام شاعر:</label>
+            <input type="text" id="poemAuthor" value="مریم شروانی راد" />
+          </div>
+        </div>
+        <div class="form-group checkbox-group">
+          <input type="checkbox" id="poemPublished" checked />
+          <label for="poemPublished">منتشر شود</label>
+        </div>
+        <button class="btn btn-primary" onclick="createPoem()">📤 انتشار شعر</button>
+      </div>
+      <div class="card">
+        <h2>📜 شعرهای منتشرشده</h2>
+        <div id="poemsList"><div class="loading">⏳ در حال بارگذاری...</div></div>
+      </div>
+    </div>
+
+    <!-- ==================== داستان‌ها ==================== -->
+    <div class="panel" id="panel-stories">
+      <div class="card">
+        <h2>📖 افزودن داستان جدید</h2>
+        <div class="form-group">
+          <label>عنوان داستان:</label>
+          <input type="text" id="storyTitle" placeholder="عنوان داستان" />
+        </div>
+        <div class="form-group">
+          <label>متن داستان:</label>
+          <textarea id="storyContent" class="large" placeholder="متن داستان..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>دسته‌بندی:</label>
+          <select id="storyCategory">
+            <option value="عمومی">عمومی</option>
+            <option value="کوتاه">داستان کوتاه</option>
+            <option value="طنز">طنز</option>
+            <option value="کودکان">کودکان</option>
+          </select>
+        </div>
+        <div class="form-group checkbox-group">
+          <input type="checkbox" id="storyPublished" checked />
+          <label for="storyPublished">منتشر شود</label>
+        </div>
+        <button class="btn btn-primary" onclick="createStory()">📤 انتشار داستان</button>
+      </div>
+      <div class="card">
+        <h2>📚 داستان‌های منتشرشده</h2>
+        <div id="storiesList"><div class="loading">⏳ در حال بارگذاری...</div></div>
+      </div>
+    </div>
+
+    <!-- ==================== دلنوشته‌ها ==================== -->
+    <div class="panel" id="panel-notes">
+      <div class="card">
+        <h2>💭 افزودن دلنوشته</h2>
+        <div class="form-group">
+          <label>متن دلنوشته:</label>
+          <textarea id="noteContent" class="large" placeholder="دلنوشته خود را بنویسید..."></textarea>
+        </div>
+        <div class="form-group checkbox-group">
+          <input type="checkbox" id="notePublished" checked />
+          <label for="notePublished">منتشر شود</label>
+        </div>
+        <button class="btn btn-primary" onclick="createNote()">📤 انتشار دلنوشته</button>
+      </div>
+      <div class="card">
+        <h2>📝 دلنوشته‌های منتشرشده</h2>
+        <div id="notesList"><div class="loading">⏳ در حال بارگذاری...</div></div>
+      </div>
+    </div>
+
+    <!-- ==================== کتاب‌ها ==================== -->
+    <div class="panel" id="panel-books">
+      <div class="card">
+        <h2>📚 معرفی کتاب جدید</h2>
+        <div class="form-group">
+          <label>عنوان کتاب:</label>
+          <input type="text" id="bookTitle" placeholder="عنوان کتاب" />
+        </div>
+        <div class="form-group">
+          <label>نویسنده:</label>
+          <input type="text" id="bookAuthor" placeholder="نام نویسنده" />
+        </div>
+        <div class="form-group">
+          <label>توضیحات:</label>
+          <textarea id="bookDescription" placeholder="توضیحات کتاب..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>جلد کتاب:</label>
+          <input type="file" id="bookCover" accept="image/*" onchange="uploadImage('bookCover', 'bookCoverUrl', 'bookCoverPreview')" />
+          <label class="upload-btn">📎 انتخاب عکس</label>
+          <input type="hidden" id="bookCoverUrl" />
+          <img id="bookCoverPreview" class="image-preview" />
+        </div>
+        <div class="form-group">
+          <label>امتیاز (۰ تا ۵):</label>
+          <input type="number" id="bookRating" min="0" max="5" step="0.5" value="0" />
+        </div>
+        <div class="form-group checkbox-group">
+          <input type="checkbox" id="bookPublished" checked />
+          <label for="bookPublished">منتشر شود</label>
+        </div>
+        <button class="btn btn-primary" onclick="createBook()">📤 افزودن کتاب</button>
+      </div>
+      <div class="card">
+        <h2>📚 کتاب‌های معرفی‌شده</h2>
+        <div id="booksList"><div class="loading">⏳ در حال بارگذاری...</div></div>
+      </div>
+    </div>
+
+    <!-- ==================== گالری ==================== -->
+    <div class="panel" id="panel-gallery">
+      <div class="card">
+        <h2>🖼️ افزودن عکس به گالری</h2>
+        <div class="form-group">
+          <label>عکس:</label>
+          <input type="file" id="galleryImage" accept="image/*" onchange="uploadImage('galleryImage', 'galleryImageUrl', 'galleryImagePreview')" />
+          <label class="upload-btn">📎 انتخاب عکس</label>
+          <input type="hidden" id="galleryImageUrl" />
+          <img id="galleryImagePreview" class="image-preview" />
+        </div>
+        <div class="form-group">
+          <label>عنوان:</label>
+          <input type="text" id="galleryTitle" placeholder="عنوان عکس" />
+        </div>
+        <div class="form-group">
+          <label>توضیحات:</label>
+          <textarea id="galleryDescription" placeholder="توضیحات عکس..."></textarea>
+        </div>
+        <div class="form-group checkbox-group">
+          <input type="checkbox" id="galleryPublished" checked />
+          <label for="galleryPublished">منتشر شود</label>
+        </div>
+        <button class="btn btn-primary" onclick="createGallery()">📤 افزودن به گالری</button>
+      </div>
+      <div class="card">
+        <h2>🖼️ عکس‌های گالری</h2>
+        <div id="galleryList" class="gallery-grid"><div class="loading">⏳ در حال بارگذاری...</div></div>
       </div>
     </div>
   </div>
@@ -280,187 +409,394 @@
   <div class="notification" id="notification"></div>
 
   <script>
-    const uploadArea = document.getElementById('uploadArea');
-    const fileInput = document.getElementById('fileInput');
-    const fileList = document.getElementById('fileList');
-    const refreshBtn = document.getElementById('refreshBtn');
-    const logoutBtn = document.getElementById('logoutBtn');
-    const uploadProgress = document.getElementById('uploadProgress');
-    const notification = document.getElementById('notification');
-
-    // نمایش نوتیفیکیشن
+    // ===== نوتیفیکیشن =====
     function showNotification(message, type = 'success') {
-      notification.textContent = message;
-      notification.className = `notification ${type}`;
-      notification.style.display = 'block';
-      setTimeout(() => {
-        notification.style.display = 'none';
-      }, 3000);
+      const n = document.getElementById('notification');
+      n.textContent = message;
+      n.className = `notification ${type}`;
+      n.style.display = 'block';
+      setTimeout(() => { n.style.display = 'none'; }, 3000);
     }
 
-    // آپلود فایل
-    async function uploadFile(file) {
-      uploadProgress.style.display = 'block';
+    // ===== تب‌ها =====
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+      });
+    });
+
+    // ===== آپلود عکس =====
+    async function uploadImage(inputId, urlFieldId, previewId) {
+      const input = document.getElementById(inputId);
+      const file = input.files[0];
+      if (!file) return;
+
       const formData = new FormData();
       formData.append('file', file);
 
       try {
-        const res = await fetch('/api/upload', {
-          method: 'POST',
-          body: formData
-        });
+        const res = await fetch('/api/admin/upload-image', { method: 'POST', body: formData });
         const data = await res.json();
-
         if (data.success) {
-          showNotification(`✅ فایل ${file.name} آپلود شد`, 'success');
-          loadFiles();
+          document.getElementById(urlFieldId).value = data.url;
+          const preview = document.getElementById(previewId);
+          preview.src = data.url;
+          preview.style.display = 'block';
+          showNotification('✅ عکس آپلود شد');
         } else {
-          showNotification(`❌ ${data.error}`, 'error');
+          showNotification('❌ ' + data.error, 'error');
         }
-      } catch (err) {
+      } catch (e) {
         showNotification('❌ خطای شبکه', 'error');
-      } finally {
-        uploadProgress.style.display = 'none';
       }
     }
 
-    // کلیک روی ناحیه آپلود
-    uploadArea.addEventListener('click', () => {
-      fileInput.click();
-    });
-
-    // انتخاب فایل
-    fileInput.addEventListener('change', (e) => {
-      Array.from(e.target.files).forEach(uploadFile);
-      fileInput.value = '';
-    });
-
-    // درگ اند دراپ
-    uploadArea.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      uploadArea.classList.add('dragover');
-    });
-    uploadArea.addEventListener('dragleave', () => {
-      uploadArea.classList.remove('dragover');
-    });
-    uploadArea.addEventListener('drop', (e) => {
-      e.preventDefault();
-      uploadArea.classList.remove('dragover');
-      Array.from(e.dataTransfer.files).forEach(uploadFile);
-    });
-
-    // گرفتن آیکون فایل
-    function getFileIcon(filename) {
-      const ext = filename.split('.').pop().toLowerCase();
-      if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'].includes(ext)) return '🖼️';
-      if (['mp4', 'avi', 'mov', 'webm'].includes(ext)) return '🎬';
-      if (['mp3', 'wav', 'ogg'].includes(ext)) return '🎵';
-      if (['pdf'].includes(ext)) return '📄';
-      if (['doc', 'docx'].includes(ext)) return '📝';
-      if (['xls', 'xlsx'].includes(ext)) return '📊';
-      if (['zip', 'rar', '7z'].includes(ext)) return '🗜️';
-      return '📎';
-    }
-
-    // فرمت حجم فایل
-    function formatSize(bytes) {
-      if (bytes === 0) return '0 B';
-      const k = 1024;
-      const sizes = ['B', 'KB', 'MB', 'GB'];
-      const i = Math.floor(Math.log(bytes) / Math.log(k));
-      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-    }
-
-    // فرمت تاریخ
-    function formatDate(dateStr) {
-      if (!dateStr) return '';
-      const date = new Date(dateStr);
-      return date.toLocaleDateString('fa-IR', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-      });
-    }
-
-    // بارگذاری لیست فایل‌ها
-    async function loadFiles() {
-      fileList.innerHTML = '<div class="loading">⏳ در حال بارگذاری...</div>';
+    // ===== درباره من =====
+    async function loadAbout() {
       try {
-        const res = await fetch('/api/list');
+        const res = await fetch('/api/admin/about');
         const data = await res.json();
+        if (data.about) document.getElementById('aboutContent').value = data.about.content || '';
+      } catch (e) {}
+    }
 
-        if (data.success && data.files.length > 0) {
-          fileList.innerHTML = data.files.map(file => `
-            <div class="file-item">
-              <div class="file-info">
-                <div class="file-icon">${getFileIcon(file.name)}</div>
-                <div class="file-details">
-                  <div class="file-name">${file.name}</div>
-                  <div class="file-meta">${formatSize(file.size)} • ${formatDate(file.created)}</div>
-                </div>
+    async function saveAbout() {
+      const content = document.getElementById('aboutContent').value;
+      try {
+        const res = await fetch('/api/admin/about/update', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ content })
+        });
+        const data = await res.json();
+        if (data.about) showNotification('✅ ذخیره شد');
+        else showNotification('❌ ' + data.error, 'error');
+      } catch (e) { showNotification('❌ خطای شبکه', 'error'); }
+    }
+
+    // ===== شعرها =====
+    async function loadPoems() {
+      try {
+        const res = await fetch('/api/admin/poems');
+        const data = await res.json();
+        const list = document.getElementById('poemsList');
+        if (data.poems && data.poems.length > 0) {
+          list.innerHTML = data.poems.map(p => `
+            <div class="list-item">
+              <div class="list-item-content">
+                <div class="list-item-title">${p.title}</div>
+                <div class="list-item-meta">${p.category} • ${p.author} • ${p.is_published ? '✅ منتشر' : '⏸️ پیش‌نویس'}</div>
+                <div class="list-item-text">${p.content.substring(0, 200)}${p.content.length > 200 ? '...' : ''}</div>
               </div>
-              <div class="file-actions">
-                <button class="action-btn download-btn" onclick="downloadFile('${file.url}')">دانلود</button>
-                <button class="action-btn delete-btn" onclick="deleteFile('uploads/${file.name}', '${file.name}')">حذف</button>
+              <div class="list-item-actions">
+                <button class="btn btn-danger btn-small" onclick="deletePoem(${p.id})">🗑️ حذف</button>
               </div>
             </div>
           `).join('');
-        } else if (data.success && data.files.length === 0) {
-          fileList.innerHTML = `
-            <div class="empty">
-              <div class="empty-icon">📭</div>
-              <div>هنوز فایلی آپلود نشده</div>
-            </div>
-          `;
         } else {
-          fileList.innerHTML = `<div class="empty">❌ ${data.error || 'خطا در بارگذاری'}</div>`;
+          list.innerHTML = '<div class="empty">📭 هنوز شعری ثبت نشده</div>';
         }
-      } catch (err) {
-        fileList.innerHTML = '<div class="empty">❌ خطای شبکه</div>';
-      }
+      } catch (e) {}
     }
 
-    // دانلود فایل
-    window.downloadFile = (url) => {
-      window.open(url, '_blank');
-    };
-
-    // حذف فایل
-    window.deleteFile = async (path, name) => {
-      if (!confirm(`آیا از حذف فایل "${name}" مطمئن هستید؟`)) return;
-
+    async function createPoem() {
+      const title = document.getElementById('poemTitle').value.trim();
+      const content = document.getElementById('poemContent').value.trim();
+      if (!title || !content) { showNotification('❌ عنوان و متن لازم است', 'error'); return; }
+      const body = {
+        title, content,
+        category: document.getElementById('poemCategory').value,
+        author: document.getElementById('poemAuthor').value,
+        is_published: document.getElementById('poemPublished').checked
+      };
       try {
-        const res = await fetch('/api/delete', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ path })
+        const res = await fetch('/api/admin/poems/create', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body)
         });
         const data = await res.json();
+        if (data.poem) {
+          showNotification('✅ شعر منتشر شد');
+          document.getElementById('poemTitle').value = '';
+          document.getElementById('poemContent').value = '';
+          loadPoems();
+        } else { showNotification('❌ ' + data.error, 'error'); }
+      } catch (e) { showNotification('❌ خطای شبکه', 'error'); }
+    }
 
-        if (data.success) {
-          showNotification(`✅ فایل حذف شد`, 'success');
-          loadFiles();
+    async function deletePoem(id) {
+      if (!confirm('حذف شود؟')) return;
+      try {
+        const res = await fetch('/api/admin/poems/delete', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id })
+        });
+        const data = await res.json();
+        if (data.success) { showNotification('✅ حذف شد'); loadPoems(); }
+        else showNotification('❌ ' + data.error, 'error');
+      } catch (e) {}
+    }
+
+    // ===== داستان‌ها =====
+    async function loadStories() {
+      try {
+        const res = await fetch('/api/admin/stories');
+        const data = await res.json();
+        const list = document.getElementById('storiesList');
+        if (data.stories && data.stories.length > 0) {
+          list.innerHTML = data.stories.map(s => `
+            <div class="list-item">
+              <div class="list-item-content">
+                <div class="list-item-title">${s.title}</div>
+                <div class="list-item-meta">${s.category} • ${s.is_published ? '✅ منتشر' : '⏸️ پیش‌نویس'}</div>
+                <div class="list-item-text">${s.content.substring(0, 200)}${s.content.length > 200 ? '...' : ''}</div>
+              </div>
+              <div class="list-item-actions">
+                <button class="btn btn-danger btn-small" onclick="deleteStory(${s.id})">🗑️ حذف</button>
+              </div>
+            </div>
+          `).join('');
         } else {
-          showNotification(`❌ ${data.error}`, 'error');
+          list.innerHTML = '<div class="empty">📭 هنوز داستانی ثبت نشده</div>';
         }
-      } catch (err) {
-        showNotification('❌ خطای شبکه', 'error');
-      }
-    };
+      } catch (e) {}
+    }
 
-    // بروزرسانی
-    refreshBtn.addEventListener('click', loadFiles);
+    async function createStory() {
+      const title = document.getElementById('storyTitle').value.trim();
+      const content = document.getElementById('storyContent').value.trim();
+      if (!title || !content) { showNotification('❌ عنوان و متن لازم است', 'error'); return; }
+      const body = {
+        title, content,
+        category: document.getElementById('storyCategory').value,
+        is_published: document.getElementById('storyPublished').checked
+      };
+      try {
+        const res = await fetch('/api/admin/stories/create', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body)
+        });
+        const data = await res.json();
+        if (data.story) {
+          showNotification('✅ داستان منتشر شد');
+          document.getElementById('storyTitle').value = '';
+          document.getElementById('storyContent').value = '';
+          loadStories();
+        } else { showNotification('❌ ' + data.error, 'error'); }
+      } catch (e) { showNotification('❌ خطای شبکه', 'error'); }
+    }
 
-    // خروج
-    logoutBtn.addEventListener('click', async () => {
+    async function deleteStory(id) {
+      if (!confirm('حذف شود؟')) return;
+      try {
+        const res = await fetch('/api/admin/stories/delete', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id })
+        });
+        const data = await res.json();
+        if (data.success) { showNotification('✅ حذف شد'); loadStories(); }
+        else showNotification('❌ ' + data.error, 'error');
+      } catch (e) {}
+    }
+
+    // ===== دلنوشته‌ها =====
+    async function loadNotes() {
+      try {
+        const res = await fetch('/api/admin/notes');
+        const data = await res.json();
+        const list = document.getElementById('notesList');
+        if (data.notes && data.notes.length > 0) {
+          list.innerHTML = data.notes.map(n => `
+            <div class="list-item">
+              <div class="list-item-content">
+                <div class="list-item-text">${n.content}</div>
+                <div class="list-item-meta">${n.is_published ? '✅ منتشر' : '⏸️ پیش‌نویس'}</div>
+              </div>
+              <div class="list-item-actions">
+                <button class="btn btn-danger btn-small" onclick="deleteNote(${n.id})">🗑️ حذف</button>
+              </div>
+            </div>
+          `).join('');
+        } else {
+          list.innerHTML = '<div class="empty">📭 هنوز دلنوشته‌ای ثبت نشده</div>';
+        }
+      } catch (e) {}
+    }
+
+    async function createNote() {
+      const content = document.getElementById('noteContent').value.trim();
+      if (!content) { showNotification('❌ متن لازم است', 'error'); return; }
+      const body = {
+        content, is_published: document.getElementById('notePublished').checked
+      };
+      try {
+        const res = await fetch('/api/admin/notes/create', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body)
+        });
+        const data = await res.json();
+        if (data.note) {
+          showNotification('✅ دلنوشته منتشر شد');
+          document.getElementById('noteContent').value = '';
+          loadNotes();
+        } else { showNotification('❌ ' + data.error, 'error'); }
+      } catch (e) { showNotification('❌ خطای شبکه', 'error'); }
+    }
+
+    async function deleteNote(id) {
+      if (!confirm('حذف شود؟')) return;
+      try {
+        const res = await fetch('/api/admin/notes/delete', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id })
+        });
+        const data = await res.json();
+        if (data.success) { showNotification('✅ حذف شد'); loadNotes(); }
+        else showNotification('❌ ' + data.error, 'error');
+      } catch (e) {}
+    }
+
+    // ===== کتاب‌ها =====
+    async function loadBooks() {
+      try {
+        const res = await fetch('/api/admin/books');
+        const data = await res.json();
+        const list = document.getElementById('booksList');
+        if (data.books && data.books.length > 0) {
+          list.innerHTML = data.books.map(b => `
+            <div class="list-item">
+              <div class="list-item-content book-item">
+                ${b.cover_url ? `<img src="${b.cover_url}" />` : ''}
+                <div>
+                  <div class="list-item-title">${b.title}</div>
+                  <div class="list-item-meta">${b.author || ''} • امتیاز: ${'⭐'.repeat(b.rating || 0)} • ${b.is_published ? '✅ منتشر' : '⏸️ پیش‌نویس'}</div>
+                  <div class="list-item-text">${b.description || ''}</div>
+                </div>
+              </div>
+              <div class="list-item-actions">
+                <button class="btn btn-danger btn-small" onclick="deleteBook(${b.id})">🗑️ حذف</button>
+              </div>
+            </div>
+          `).join('');
+        } else {
+          list.innerHTML = '<div class="empty">📭 هنوز کتابی ثبت نشده</div>';
+        }
+      } catch (e) {}
+    }
+
+    async function createBook() {
+      const title = document.getElementById('bookTitle').value.trim();
+      if (!title) { showNotification('❌ عنوان لازم است', 'error'); return; }
+      const body = {
+        title,
+        author: document.getElementById('bookAuthor').value,
+        description: document.getElementById('bookDescription').value,
+        cover_url: document.getElementById('bookCoverUrl').value,
+        rating: parseFloat(document.getElementById('bookRating').value) || 0,
+        is_published: document.getElementById('bookPublished').checked
+      };
+      try {
+        const res = await fetch('/api/admin/books/create', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body)
+        });
+        const data = await res.json();
+        if (data.book) {
+          showNotification('✅ کتاب اضافه شد');
+          document.getElementById('bookTitle').value = '';
+          document.getElementById('bookAuthor').value = '';
+          document.getElementById('bookDescription').value = '';
+          document.getElementById('bookCoverUrl').value = '';
+          document.getElementById('bookRating').value = '0';
+          document.getElementById('bookCoverPreview').style.display = 'none';
+          loadBooks();
+        } else { showNotification('❌ ' + data.error, 'error'); }
+      } catch (e) { showNotification('❌ خطای شبکه', 'error'); }
+    }
+
+    async function deleteBook(id) {
+      if (!confirm('حذف شود؟')) return;
+      try {
+        const res = await fetch('/api/admin/books/delete', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id })
+        });
+        const data = await res.json();
+        if (data.success) { showNotification('✅ حذف شد'); loadBooks(); }
+        else showNotification('❌ ' + data.error, 'error');
+      } catch (e) {}
+    }
+
+    // ===== گالری =====
+    async function loadGallery() {
+      try {
+        const res = await fetch('/api/admin/gallery');
+        const data = await res.json();
+        const list = document.getElementById('galleryList');
+        if (data.gallery && data.gallery.length > 0) {
+          list.innerHTML = data.gallery.map(g => `
+            <div class="gallery-item">
+              <img src="${g.image_url}" />
+              <div class="gallery-item-info">
+                <div class="gallery-item-title">${g.title || 'بدون عنوان'}</div>
+                <div class="list-item-meta">${g.description || ''}</div>
+                <div class="gallery-item-actions">
+                  <button class="btn btn-danger btn-small" onclick="deleteGallery(${g.id})">🗑️ حذف</button>
+                </div>
+              </div>
+            </div>
+          `).join('');
+        } else {
+          list.innerHTML = '<div class="empty">📭 هنوز عکسی ثبت نشده</div>';
+        }
+      } catch (e) {}
+    }
+
+    async function createGallery() {
+      const imageUrl = document.getElementById('galleryImageUrl').value;
+      if (!imageUrl) { showNotification('❌ عکس لازم است', 'error'); return; }
+      const body = {
+        image_url: imageUrl,
+        title: document.getElementById('galleryTitle').value,
+        description: document.getElementById('galleryDescription').value,
+        is_published: document.getElementById('galleryPublished').checked
+      };
+      try {
+        const res = await fetch('/api/admin/gallery/create', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body)
+        });
+        const data = await res.json();
+        if (data.item) {
+          showNotification('✅ عکس اضافه شد');
+          document.getElementById('galleryImageUrl').value = '';
+          document.getElementById('galleryTitle').value = '';
+          document.getElementById('galleryDescription').value = '';
+          document.getElementById('galleryImagePreview').style.display = 'none';
+          loadGallery();
+        } else { showNotification('❌ ' + data.error, 'error'); }
+      } catch (e) { showNotification('❌ خطای شبکه', 'error'); }
+    }
+
+    async function deleteGallery(id) {
+      if (!confirm('حذف شود؟')) return;
+      try {
+        const res = await fetch('/api/admin/gallery/delete', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id })
+        });
+        const data = await res.json();
+        if (data.success) { showNotification('✅ حذف شد'); loadGallery(); }
+        else showNotification('❌ ' + data.error, 'error');
+      } catch (e) {}
+    }
+
+    // ===== خروج =====
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
       await fetch('/api/logout', { method: 'POST' });
       window.location.href = '/admin/login';
     });
 
-    // بارگذاری اولیه
-    loadFiles();
+    // ===== بارگذاری اولیه =====
+    loadAbout();
+    loadPoems();
+    loadStories();
+    loadNotes();
+    loadBooks();
+    loadGallery();
   </script>
 </body>
 </html>
