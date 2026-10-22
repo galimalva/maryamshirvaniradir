@@ -103,6 +103,13 @@
           <label>متن شعر:</label>
           <textarea id="poemContent" class="large" placeholder="متن شعر..."></textarea>
         </div>
+        <div class="form-group">
+          <label>عکس شعر (اختیاری):</label>
+          <input type="file" id="poemImage" accept="image/*" onchange="uploadImage('poemImage', 'poemImageUrl', 'poemImagePreview')" />
+          <label class="upload-btn">📎 انتخاب عکس</label>
+          <input type="hidden" id="poemImageUrl" />
+          <img id="poemImagePreview" class="image-preview" />
+        </div>
         <div class="two-col">
           <div class="form-group">
             <label>دسته‌بندی:</label>
@@ -141,6 +148,13 @@
         <div class="form-group">
           <label>متن داستان:</label>
           <textarea id="storyContent" class="large" placeholder="متن داستان..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>عکس داستان (اختیاری):</label>
+          <input type="file" id="storyImage" accept="image/*" onchange="uploadImage('storyImage', 'storyImageUrl', 'storyImagePreview')" />
+          <label class="upload-btn">📎 انتخاب عکس</label>
+          <input type="hidden" id="storyImageUrl" />
+          <img id="storyImagePreview" class="image-preview" />
         </div>
         <div class="form-group">
           <label>دسته‌بندی:</label>
@@ -323,6 +337,7 @@
               <div class="list-item-content">
                 <div class="list-item-title">${p.title}</div>
                 <div class="list-item-meta">${p.category} • ${p.author} • ${p.is_published ? '✅ منتشر' : '⏸️ پیش‌نویس'}</div>
+                ${p.image_url ? `<img src="${p.image_url}" style="max-width:100px;max-height:100px;border-radius:4px;margin-top:8px" />` : ''}
                 <div class="list-item-text">${p.content.substring(0, 200)}${p.content.length > 200 ? '...' : ''}</div>
               </div>
               <div class="list-item-actions">
@@ -342,7 +357,8 @@
         title, content,
         category: document.getElementById('poemCategory').value,
         author: document.getElementById('poemAuthor').value,
-        is_published: document.getElementById('poemPublished').checked
+        is_published: document.getElementById('poemPublished').checked,
+        image_url: document.getElementById('poemImageUrl').value
       };
       try {
         const res = await fetch('/api/admin/poems/create', {
@@ -353,6 +369,8 @@
           showNotification('✅ شعر منتشر شد');
           document.getElementById('poemTitle').value = '';
           document.getElementById('poemContent').value = '';
+          document.getElementById('poemImageUrl').value = '';
+          document.getElementById('poemImagePreview').style.display = 'none';
           loadPoems();
         } else { showNotification('❌ ' + data.error, 'error'); }
       } catch (e) { showNotification('❌ خطای شبکه', 'error'); }
@@ -399,7 +417,8 @@
       const body = {
         title, content,
         category: document.getElementById('storyCategory').value,
-        is_published: document.getElementById('storyPublished').checked
+        is_published: document.getElementById('storyPublished').checked,
+        image_url: document.getElementById('storyImageUrl').value
       };
       try {
         const res = await fetch('/api/admin/stories/create', {
@@ -410,6 +429,8 @@
           showNotification('✅ داستان منتشر شد');
           document.getElementById('storyTitle').value = '';
           document.getElementById('storyContent').value = '';
+          document.getElementById('storyImageUrl').value = '';
+          document.getElementById('storyImagePreview').style.display = 'none';
           loadStories();
         } else { showNotification('❌ ' + data.error, 'error'); }
       } catch (e) { showNotification('❌ خطای شبکه', 'error'); }
