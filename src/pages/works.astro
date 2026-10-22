@@ -1,5 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import stories from "../data/stories.js";
+import poems from "../data/poems.js";
 ---
 
 <Layout title="آثار | شویار">
@@ -11,17 +13,52 @@ import Layout from "../layouts/Layout.astro";
     <!-- داستان‌ها -->
     <section>
       <h2 class="section-title" style="font-size:clamp(20px,4vw,30px)">داستان‌ها</h2>
-      <div class="stories-grid" id="storiesGrid">
-        <p style="text-align:center;color:#888;padding:30px">⏳ در حال بارگذاری...</p>
+
+      <div class="stories-grid">
+        {
+          stories.map((s) => (
+            <article class="card story-card">
+              {s.image && <img src={s.image} alt={s.title} class="story-img" />}
+              <span class="pill">{s.type}</span>
+              <h3>{s.title}</h3>
+              <p class="story-excerpt">{s.excerpt}</p>
+              <a href={s.telegram} target="_blank" rel="noopener" class="btn">
+                ادامه در تلگرام ←
+              </a>
+            </article>
+          ))
+        }
       </div>
+
+      <!-- داستان‌های جدید از پنل ادمین -->
+      <div class="stories-grid" id="newStoriesGrid"></div>
     </section>
 
     <!-- شعرها -->
     <section style="margin-top:70px">
       <h2 class="section-title" style="font-size:clamp(20px,4vw,30px)">شعرها</h2>
-      <div class="poems-grid" id="poemsGrid">
-        <p style="text-align:center;color:#888;padding:30px">⏳ در حال بارگذاری...</p>
+
+      <div class="poems-grid">
+        {
+          poems.map((p) => (
+            <article class="card poem-card">
+              <div class="year-row">
+                <span class="poem-meta">{p.date}</span>
+                <span class="pill">شعر</span>
+              </div>
+              <h3>{p.title}</h3>
+              <div class="poem-divider"></div>
+              <p class="poem-text">{p.text}</p>
+              <a href={p.telegram} target="_blank" rel="noopener" class="btn">
+                ادامه در تلگرام ←
+              </a>
+            </article>
+          ))
+        }
       </div>
+
+      <!-- شعرهای جدید از پنل ادمین -->
+      <div class="poems-grid" id="newPoemsGrid"></div>
     </section>
 
   </div>
@@ -44,11 +81,11 @@ import Layout from "../layouts/Layout.astro";
     } catch(e) { return ''; }
   }
 
-  async function loadStories() {
+  async function loadNewStories() {
     try {
       const res = await fetch('/api/stories');
       const data = await res.json();
-      const grid = document.getElementById('storiesGrid');
+      const grid = document.getElementById('newStoriesGrid');
 
       if (data.stories && data.stories.length > 0) {
         grid.innerHTML = data.stories.map(s => `
@@ -59,18 +96,18 @@ import Layout from "../layouts/Layout.astro";
           </article>
         `).join('');
       } else {
-        grid.innerHTML = '<p style="text-align:center;color:#888;padding:30px">📭 هنوز داستانی منتشر نشده</p>';
+        grid.innerHTML = '';
       }
     } catch (e) {
-      document.getElementById('storiesGrid').innerHTML = '<p style="text-align:center;color:#888;padding:30px">❌ خطا در بارگذاری</p>';
+      document.getElementById('newStoriesGrid').innerHTML = '';
     }
   }
 
-  async function loadPoems() {
+  async function loadNewPoems() {
     try {
       const res = await fetch('/api/poems');
       const data = await res.json();
-      const grid = document.getElementById('poemsGrid');
+      const grid = document.getElementById('newPoemsGrid');
 
       if (data.poems && data.poems.length > 0) {
         grid.innerHTML = data.poems.map(p => `
@@ -85,13 +122,13 @@ import Layout from "../layouts/Layout.astro";
           </article>
         `).join('');
       } else {
-        grid.innerHTML = '<p style="text-align:center;color:#888;padding:30px">📭 هنوز شعری منتشر نشده</p>';
+        grid.innerHTML = '';
       }
     } catch (e) {
-      document.getElementById('poemsGrid').innerHTML = '<p style="text-align:center;color:#888;padding:30px">❌ خطا در بارگذاری</p>';
+      document.getElementById('newPoemsGrid').innerHTML = '';
     }
   }
 
-  loadStories();
-  loadPoems();
+  loadNewStories();
+  loadNewPoems();
 </script>
