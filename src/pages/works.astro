@@ -52,19 +52,22 @@ import poems from "../data/poems.js";
   .poem-card-img-wrap,
   .story-card-img-wrap {
     width: 100% !important;
-    height: 160px !important;
+    max-height: 400px !important;
     overflow: hidden !important;
     border-radius: 8px !important;
     margin-bottom: 12px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    background: #f3f4f6 !important;
   }
   .poem-card-img-wrap img,
   .story-card-img-wrap img {
     width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
+    height: auto !important;
+    max-height: 400px !important;
+    object-fit: contain !important;
     display: block !important;
-    max-width: none !important;
-    max-height: none !important;
   }
 </style>
 
