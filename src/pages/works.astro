@@ -10,55 +10,38 @@ import poems from "../data/poems.js";
     <h1 class="section-title">آثار <span>شویار</span></h1>
     <p class="subtitle">داستان‌ها و شعرهایی که ادامه یا مجموعه‌شان در تلگرام منتشر می‌شود.</p>
 
-    <!-- داستان‌ها -->
     <section>
       <h2 class="section-title" style="font-size:clamp(20px,4vw,30px)">داستان‌ها</h2>
-
       <div class="stories-grid">
-        {
-          stories.map((s) => (
-            <article class="card story-card">
-              {s.image && <img src={s.image} alt={s.title} class="story-img" />
-              }
-              <span class="pill">{s.type}</span>
-              <h3>{s.title}</h3>
-              <p class="story-excerpt">{s.excerpt}</p>
-              <a href={s.telegram} target="_blank" rel="noopener" class="btn">
-                ادامه در تلگرام ←
-              </a>
-            </article>
-          ))
-        }
+        {stories.map((s) => (
+          <article class="card story-card">
+            {s.image && <img src={s.image} alt={s.title} class="story-img" />}
+            <span class="pill">{s.type}</span>
+            <h3>{s.title}</h3>
+            <p class="story-excerpt">{s.excerpt}</p>
+            <a href={s.telegram} target="_blank" rel="noopener" class="btn">ادامه در تلگرام ←</a>
+          </article>
+        ))}
       </div>
-
-      <!-- داستان‌های جدید از پنل ادمین -->
       <div class="stories-grid" id="newStoriesGrid"></div>
     </section>
 
-    <!-- شعرها -->
     <section style="margin-top:70px">
       <h2 class="section-title" style="font-size:clamp(20px,4vw,30px)">شعرها</h2>
-
       <div class="poems-grid">
-        {
-          poems.map((p) => (
-            <article class="poem-card">
-              <div class="year-row">
-                <span class="poem-meta">{p.date}</span>
-                <span class="pill">شعر</span>
-              </div>
-              <h3>{p.title}</h3>
-              <div class="poem-divider"></div>
-              <p class="poem-text">{p.text}</p>
-              <a href={p.telegram} target="_blank" rel="noopener" class="btn">
-                ادامه در تلگرام ←
-              </a>
-            </article>
-          ))
-        }
+        {poems.map((p) => (
+          <article class="card poem-card">
+            <div class="year-row">
+              <span class="poem-meta">{p.date}</span>
+              <span class="pill">شعر</span>
+            </div>
+            <h3>{p.title}</h3>
+            <div class="poem-divider"></div>
+            <p class="poem-text">{p.text}</p>
+            <a href={p.telegram} target="_blank" rel="noopener" class="btn">ادامه در تلگرام ←</a>
+          </article>
+        ))}
       </div>
-
-      <!-- شعرهای جدید از پنل ادمین -->
       <div class="poems-grid" id="newPoemsGrid"></div>
     </section>
 
@@ -87,7 +70,6 @@ import poems from "../data/poems.js";
       const res = await fetch('/api/stories');
       const data = await res.json();
       const grid = document.getElementById('newStoriesGrid');
-
       if (data.stories && data.stories.length > 0) {
         grid.innerHTML = data.stories.map(s => `
           <article class="card story-card">
@@ -100,14 +82,7 @@ import poems from "../data/poems.js";
       } else {
         grid.innerHTML = '';
       }
-    } (catch (e) {
-      document.getElementById('newStoriesGrid').innerHTML = '';
-    }
-  }
-
-  async function loadNewPoems() {
-    try {
-      const catch (e) {
+    } catch (e) {
       document.getElementById('newStoriesGrid').innerHTML = '';
     }
   }
@@ -117,13 +92,11 @@ import poems from "../data/poems.js";
       const res = await fetch('/api/poems');
       const data = await res.json();
       const grid = document.getElementById('newPoemsGrid');
-
       if (data.poems && data.poems.length > 0) {
         grid.innerHTML = data.poems.map(p => `
           <article class="card poem-card">
             <div class="year-row">
               <span class="poem-meta">${formatDate(p.created_at)}</span>
-              <span class="poem-meta">${escapeHtml(p.author)}</span>
               <span class="pill">${escapeHtml(p.category) || 'شعر'}</span>
             </div>
             <h3>${escapeHtml(p.title)}</h3>
